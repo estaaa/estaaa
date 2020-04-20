@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | 道法自然</title>
+  <title>php异常、错误处理机制 | 道法自然</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。 PHP 中 try{}catch{}语句概述 PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取） 需要进行异常处理的代码都必须放入 try 代码块内，以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2020/04/20/hello-world/index.html">
+<meta property="og:title" content="php异常、错误处理机制">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/catch/index.html">
 <meta property="og:site_name" content="道法自然">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。 PHP 中 try{}catch{}语句概述 PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取） 需要进行异常处理的代码都必须放入 try 代码块内，以">
 <meta property="og:locale" content="ch">
-<meta property="article:published_time" content="2020-04-20T07:16:36.000Z">
-<meta property="article:modified_time" content="2020-04-20T09:07:54.000Z">
-<meta property="article:author" content="Hai Lun">
+<meta property="article:published_time" content="2020-04-20T10:29:27.000Z">
+<meta property="article:modified_time" content="2020-04-20T10:33:10.000Z">
+<meta property="article:author" content="道法自然">
+<meta property="article:tag" content="php教程 js教程 php博客 linux教程">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="道法自然" type="application/atom+xml">
@@ -47,11 +48,13 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/header.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Hai Lun</a></h1>
+		  <h1 class="header-author"><a href="/">道法自然</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">记录精彩的人生, 留下永恒的脚印</p>
 		
 
 		<nav class="header-menu">
@@ -113,11 +116,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/header.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Hai Lun</h1>
+			  <h1 class="header-author js-header-author">道法自然</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>记录精彩的人生, 留下永恒的脚印<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -178,40 +183,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-catch" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      php异常、错误处理机制
     </h1>
   
 
         
-        <a href="/2020/04/20/hello-world/" class="archive-article-date">
-  	<time datetime="2020-04-20T07:16:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+        <a href="/2020/04/20/catch/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:29:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <p>1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。</p>
+<p><strong>PHP 中 try{}catch{}语句概述</strong></p>
+<p>PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取）</p>
+<p>需要进行异常处理的代码都必须放入 try 代码块内，以便捕获可能存在的异常。</p>
+<p>每一个 try 至少要有一个与之对应的 catch。</p>
+<p>使用多个 catch 可以捕获不同的类所产生的异常。</p>
+<p>当 try 代码块不再抛出异常或者找不到 catch 能匹配所抛出的异常时，PHP 代码就会在跳转到最后一个 catch 的后面继续执行。</p>
+<p>当然，PHP 允许在 catch 代码块内再次抛出（throw）异常。</p>
+<p>当一个异常被抛出时，其后（译者注：指抛出异常时所在的代码块）的代码将不会继续执行，而 PHP 就会尝试查找第一个能与之匹配的 catch。</p>
+<p>如果一个异常没有被捕获，而且又没用使用 set_exception_handler() 作相应的处理的话，那么 PHP 将会产生一个严重的错误，并且输出 Uncaught Exception … （未捕获异常）的提示信息。</p>
+<p>先来看一下 PHP 内置异常类的基本属性和方法。（不包括具体实现）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line"></span><br><span class="line">&#125;catch()&#123;</span><br><span class="line"></span><br><span class="line">throw new Exception();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">catch()&#123;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;这里可以捕获到前面一个块抛出的Exception&#96;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p><strong>如果抛出了一个异常，try 语句中的脚本将会停止执行，然后马上转向执行 catch 语句中的脚本。</strong></p>
+<p>例子如下：</p>
+<p>包含文件错误抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F; 错误的演示</span><br><span class="line">try &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&#39;file is not exists&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&quot;test_try_catch.php&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&quot;file is not exists&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p> 2、通过 set_exception_handler 函数设置异常处理函数，在这种情况下，即使没有 try{}catch{}，throw 抛出的异常也能由 set_exception_handler 设置的函数自动捕捉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_exception_handler(&#39;exceptionHandler&#39;);  </span><br><span class="line">    throw new Exception(&quot;kkkkkkkkkkkkkkkk&quot;);  </span><br><span class="line">    function exceptionHandler(Exception $exception)&#123;  </span><br><span class="line">          </span><br><span class="line">        echo $exception-&gt;getMessage();  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在 PHP 开发的时候常常会用到 error_reporting(report_level)来调试自己的程序，下面列出了 report_level 可能值：</p>
+<p>| 值 | 常量 | 描述 |<br>| 1 | E_ERROR | 这是一个严重错误，不可恢复，如位置异常，内存不足等 |<br>| 2 | E_WARNING | 警告，最一般的错误，如函数的参数错误等 |<br>| 4 | E_PARSE | 解析错误，在解析 PHP 文件时产生，并强制 PHP 在执行前退出 |<br>| 8 | E_NOTICE | 通告表示可能在操作一些未知的变量等。在开发时可开启通告，以保证程序是”安全通告”的，瑞在正式系统中，应关闭通告 |<br>| 16 | E_CORE_ERROR | 这个内部错误是由于 PHP 加载扩展失败而导致的，并且会导致 PHP 停止运行并退出 |<br>| 32 | E_CORE_WARNING | PHP 启动时初始化过程中的警告(非致命性错) |<br>| 64 | E_COMPILE_ERROR | 编译错误是在编译时发生，这个错误将导致 PHP 运行退出 |<br>| 128 | E_COMPILE_WARNING | 编译警告用于告诉用户一些不推荐的语法信息 |<br>| 256 | E_USER_ERROR | 用户定义的错误将导致辞 PHP 退出，它对是来自 PHP 自身，而是来自脚本文件中。 |<br>| 512 | E_USER_WARNING | 脚本使用它来通知一个执行失败，同时 PHP 也会用 E_WARNING 通知 |<br>| 1024 | E_USER_NOTICE | 用户定义的通告用于在脚本中表示可能存在的错误 |<br>| 2048 | E_STRICT | 编码标准化警告(建议如何修改以向前兼容) |<br>| 4096 | E_RECOVERABLE_ERROR | 接近致命的运行时错误，若未被捕获则视同 E_ERROR |<br>| 8191 | E_ALL | 除 E_STRICT 外的所有错误(PHP6 中为 8191,即包含所有) |</p>
+<p>例子：</p>
+<p>任意数目的以上选项都可以用“或”来连接（用 OR 或 |），这样可以报告所有需要的各级别错误。例如，下面的代码关闭了用户自定义的错误和警告，执行了某些操作，然后恢复到原始的报错级别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F;禁用错误报告</span><br><span class="line">error_reporting(0);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告运行时错误</span><br><span class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);  </span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告所有错误</span><br><span class="line">error_reporting(E_ALL);  </span><br><span class="line"> </span><br><span class="line">error_reporting(7);</span><br><span class="line">&#x2F;*</span><br><span class="line">设置php错误检测级别</span><br><span class="line">E_ERROR - 致命性运行时错 (1)</span><br><span class="line">E_WARNING - 运行时警告（非致命性错）(2)</span><br><span class="line">E_PARSE - 编译时解析错误 (4)</span><br><span class="line">1+2+4 &#x3D; 7</span><br><span class="line">*&#x2F;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
+
+
+
+<p>如果设置了 error_reporting(E_NOTICE)，那么程序只会输出 E_NOTICE 等级的信息，一般我们使用的时候只需要设置 error_reporting(E_ALL&amp;!E_WARNING)就行了</p>
+<p>上面我们看到有一种错误叫用户自定义的错误消息，这是什么呢？我们先看一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">    trigger_error(&quot;aaaaaaassssssssssss&quot;,E_USER_ERROR);  </span><br><span class="line">    function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">    if($errno&#x3D;&#x3D;E_USER_ERROR)&#123;  </span><br><span class="line">   	echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innnnnnnni:aaaaaaassssssssssss</span><br></pre></td></tr></table></figure>
+
+
+
+<p>trigger_error()就是用来抛出用户自定义错误消息的函数，通过这个我们能抛出自定义的一些消息被当作错误来处理，比如严重的逻辑问题</p>
+<p>上面的程序我们看到，当程序出错时，除了让 PHP 默认输出出错信息外，我们还能设置自己的错误处理函数，设置的方法就是set_error_handler(),下面来看个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">   echo &quot;dddddddddddd&lt;&#x2F;br&gt;&quot;;  </span><br><span class="line">   echo $cc;&#x2F;&#x2F;$cc没有定义，echo会出错  </span><br><span class="line">   function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">       if($errno&#x3D;&#x3D;E_NOTICE)&#123;  </span><br><span class="line">           echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">       &#125;  </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dddddddddddd</span><br><span class="line">innnnnnnni:Undefined variable: cc</span><br></pre></td></tr></table></figure>
       
 
       
@@ -301,7 +341,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/catch/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -313,6 +353,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2020/04/20/etag/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Etag缓存在PHP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/20/iconv/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iconv的使用方法(转换编码,截取字符串,统计长度)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -350,7 +409,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 Hai Lun
+    		&copy; 2020 道法自然
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

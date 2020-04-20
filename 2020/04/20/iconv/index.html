@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>道法自然</title>
+  <title>iconv的使用方法(转换编码,截取字符串,统计长度) | 道法自然</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="php教程 js教程 php博客 linux教程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="道法自然">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。 PHP 中 try{}catch{}语句概述 PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取） 需要进行异常处理的代码都必须放入 try 代码块内，以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iconv的使用方法(转换编码,截取字符串,统计长度)">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/iconv/index.html">
 <meta property="og:site_name" content="道法自然">
-<meta property="og:description" content="php教程 js教程 php博客 linux教程">
+<meta property="og:description" content="1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。 PHP 中 try{}catch{}语句概述 PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取） 需要进行异常处理的代码都必须放入 try 代码块内，以">
 <meta property="og:locale" content="ch">
+<meta property="article:published_time" content="2020-04-20T10:27:54.000Z">
+<meta property="article:modified_time" content="2020-04-20T10:30:00.000Z">
 <meta property="article:author" content="道法自然">
 <meta property="article:tag" content="php教程 js教程 php博客 linux教程">
 <meta name="twitter:card" content="summary">
@@ -181,242 +183,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-etag" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-iconv" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/etag/">Etag缓存在PHP</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/etag/" class="archive-article-date">
-  	<time datetime="2020-04-20T10:30:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>HTTP 提供了许多页面缓存的方案，其中属 Etag 和 Last-Modified 应用最广。本文会先介绍 Etag 的应用场景，然后说说他在 PHP 和 node 中的使用。</p>
-<h3 id="一、Etag-的使用"><a href="#一、Etag-的使用" class="headerlink" title="一、Etag 的使用"></a>一、Etag 的使用</h3><p>客户端和浏览器之间的交互：</p>
-<pre class="brush:csharp;gutter:true;" style="color: rgb(0, 0, 0); font-family: "Courier New"; font-size: 12px; margin: 5px 8px; padding: 5px;">+---------+       1         +---------+
-|         |---------------->|         |
-|         |   2（200，OK）   |         |
-|         |<----------------|         |
-|    客   |    3（Etag）     |    服   |
-|         |---------------->|         |
-|    户   |    4（304）      |    务   |
-|         |<----------------|         |
-|    端   |    3（强制刷新）  |    端   |
-|         |---------------->|         |
-|         |   6（200，OK）   |         |
-|         |<----------------|         |
-+---------+                 +---------+
-                <Created By Barret Lee>
-</pre>
-
-<ol>
-<li>客户端向服务器请求资源 S</li>
-<li>服务器返回数据，并带上一个 Etag</li>
-<li>客户端再次请求资源 S，由于上次服务器给他返回了一个 Etag，这次请求的时候他会带上这个 Etag</li>
-<li>服务器发现请求中包含 Etag，判断是否过期，没过期则返回 304 Not Modified</li>
-<li>客户端强制刷新（如 Chrome 中 ctrl+shift+R 刷新页面），请求中剔除 Etag</li>
-<li>服务器未发现请求中包含 Etag，返回资源 S，并带上一个 Etag</li>
-</ol>
-<h3 id="二、代码实现"><a href="#二、代码实现" class="headerlink" title="二、代码实现"></a>二、代码实现</h3><p>第一次请求数据：<br><img src="/img/blog/1.jpg" alt=""><br>浏览器在接受到服务器发过来的 Etag 后，会保存下来，下次请求的时候会将它放在请求头中，其 key 值为 If-None-Match。<br><img src="/img/blog/2.jpg" alt=""><br>服务器拿到 If-None-Match 之后，对比之前的 Etag，如果没变，则返回 304 Not Modified.</p>
-<h4 id="1-PHP-中的-Etag"><a href="#1-PHP-中的-Etag" class="headerlink" title="1. PHP 中的 Etag"></a>1. PHP 中的 Etag</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $str &#x3D; &quot;Barret Lee&quot;;</span><br><span class="line">    $Etag &#x3D; md5($str);</span><br><span class="line"></span><br><span class="line">    if(array_key_exists(&#39;HTTP_IF_NONE_MATCH&#39;, $_SERVER) and $_SERVER[&#39;HTTP_IF_NONE_MATCH&#39;] &#x3D;&#x3D; $Etag)&#123;</span><br><span class="line">        header(&quot;HTTP&#x2F;1.1 304 Not Modified&quot;);</span><br><span class="line">        exit();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        header(&quot;Etag:&quot; . $Etag);</span><br><span class="line">        echo $str;</span><br><span class="line">    &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h3><p>Etag 在缓存处理中用的比较广泛，使用它可以减少一些不必要请求的带宽的占用。服务器输出的内容不变，浏览器就应该使用缓存，没必要每次都向服务器端索要数据，造成不必要的浪费。</p>
-<p>从上面我们可以看到，如果想拿到 Etag，就必须先拿到要输出的数据，所以 Etag 只能减少带宽的占用，并不能降低服务器的消耗。如果是静态页面，可以判断文件最近一次的修改时间（Last-Modified），获取文件上次修改时间的消耗比拿到整个数据的消耗要小的多。所以很多时候 Etag 都是配合这 Last-Modified 一起使用的。</p>
-<p>上面的 PHP 和 node 代码演示，很明显的差异就是，node 更加细致，或者说他更加底层，我们可以获取的几乎都是未加修饰的原始数据，从数据量的交互和可操控性来看，我更偏向于 node 的使用。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/etag/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-catch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/catch/">php异常、错误处理机制</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/catch/" class="archive-article-date">
-  	<time datetime="2020-04-20T10:29:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。</p>
-<p><strong>PHP 中 try{}catch{}语句概述</strong></p>
-<p>PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取）</p>
-<p>需要进行异常处理的代码都必须放入 try 代码块内，以便捕获可能存在的异常。</p>
-<p>每一个 try 至少要有一个与之对应的 catch。</p>
-<p>使用多个 catch 可以捕获不同的类所产生的异常。</p>
-<p>当 try 代码块不再抛出异常或者找不到 catch 能匹配所抛出的异常时，PHP 代码就会在跳转到最后一个 catch 的后面继续执行。</p>
-<p>当然，PHP 允许在 catch 代码块内再次抛出（throw）异常。</p>
-<p>当一个异常被抛出时，其后（译者注：指抛出异常时所在的代码块）的代码将不会继续执行，而 PHP 就会尝试查找第一个能与之匹配的 catch。</p>
-<p>如果一个异常没有被捕获，而且又没用使用 set_exception_handler() 作相应的处理的话，那么 PHP 将会产生一个严重的错误，并且输出 Uncaught Exception … （未捕获异常）的提示信息。</p>
-<p>先来看一下 PHP 内置异常类的基本属性和方法。（不包括具体实现）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line"></span><br><span class="line">&#125;catch()&#123;</span><br><span class="line"></span><br><span class="line">throw new Exception();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">catch()&#123;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;这里可以捕获到前面一个块抛出的Exception&#96;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>如果抛出了一个异常，try 语句中的脚本将会停止执行，然后马上转向执行 catch 语句中的脚本。</strong></p>
-<p>例子如下：</p>
-<p>包含文件错误抛出异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F; 错误的演示</span><br><span class="line">try &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&#39;file is not exists&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&quot;test_try_catch.php&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&quot;file is not exists&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p> 2、通过 set_exception_handler 函数设置异常处理函数，在这种情况下，即使没有 try{}catch{}，throw 抛出的异常也能由 set_exception_handler 设置的函数自动捕捉</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_exception_handler(&#39;exceptionHandler&#39;);  </span><br><span class="line">    throw new Exception(&quot;kkkkkkkkkkkkkkkk&quot;);  </span><br><span class="line">    function exceptionHandler(Exception $exception)&#123;  </span><br><span class="line">          </span><br><span class="line">        echo $exception-&gt;getMessage();  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>在 PHP 开发的时候常常会用到 error_reporting(report_level)来调试自己的程序，下面列出了 report_level 可能值：</p>
-<p>| 值 | 常量 | 描述 |<br>| 1 | E_ERROR | 这是一个严重错误，不可恢复，如位置异常，内存不足等 |<br>| 2 | E_WARNING | 警告，最一般的错误，如函数的参数错误等 |<br>| 4 | E_PARSE | 解析错误，在解析 PHP 文件时产生，并强制 PHP 在执行前退出 |<br>| 8 | E_NOTICE | 通告表示可能在操作一些未知的变量等。在开发时可开启通告，以保证程序是”安全通告”的，瑞在正式系统中，应关闭通告 |<br>| 16 | E_CORE_ERROR | 这个内部错误是由于 PHP 加载扩展失败而导致的，并且会导致 PHP 停止运行并退出 |<br>| 32 | E_CORE_WARNING | PHP 启动时初始化过程中的警告(非致命性错) |<br>| 64 | E_COMPILE_ERROR | 编译错误是在编译时发生，这个错误将导致 PHP 运行退出 |<br>| 128 | E_COMPILE_WARNING | 编译警告用于告诉用户一些不推荐的语法信息 |<br>| 256 | E_USER_ERROR | 用户定义的错误将导致辞 PHP 退出，它对是来自 PHP 自身，而是来自脚本文件中。 |<br>| 512 | E_USER_WARNING | 脚本使用它来通知一个执行失败，同时 PHP 也会用 E_WARNING 通知 |<br>| 1024 | E_USER_NOTICE | 用户定义的通告用于在脚本中表示可能存在的错误 |<br>| 2048 | E_STRICT | 编码标准化警告(建议如何修改以向前兼容) |<br>| 4096 | E_RECOVERABLE_ERROR | 接近致命的运行时错误，若未被捕获则视同 E_ERROR |<br>| 8191 | E_ALL | 除 E_STRICT 外的所有错误(PHP6 中为 8191,即包含所有) |</p>
-<p>例子：</p>
-<p>任意数目的以上选项都可以用“或”来连接（用 OR 或 |），这样可以报告所有需要的各级别错误。例如，下面的代码关闭了用户自定义的错误和警告，执行了某些操作，然后恢复到原始的报错级别：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F;禁用错误报告</span><br><span class="line">error_reporting(0);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告运行时错误</span><br><span class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);  </span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告所有错误</span><br><span class="line">error_reporting(E_ALL);  </span><br><span class="line"> </span><br><span class="line">error_reporting(7);</span><br><span class="line">&#x2F;*</span><br><span class="line">设置php错误检测级别</span><br><span class="line">E_ERROR - 致命性运行时错 (1)</span><br><span class="line">E_WARNING - 运行时警告（非致命性错）(2)</span><br><span class="line">E_PARSE - 编译时解析错误 (4)</span><br><span class="line">1+2+4 &#x3D; 7</span><br><span class="line">*&#x2F;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<p>如果设置了 error_reporting(E_NOTICE)，那么程序只会输出 E_NOTICE 等级的信息，一般我们使用的时候只需要设置 error_reporting(E_ALL&amp;!E_WARNING)就行了</p>
-<p>上面我们看到有一种错误叫用户自定义的错误消息，这是什么呢？我们先看一个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">    trigger_error(&quot;aaaaaaassssssssssss&quot;,E_USER_ERROR);  </span><br><span class="line">    function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">    if($errno&#x3D;&#x3D;E_USER_ERROR)&#123;  </span><br><span class="line">   	echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p> 输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innnnnnnni:aaaaaaassssssssssss</span><br></pre></td></tr></table></figure>
-
-
-
-<p>trigger_error()就是用来抛出用户自定义错误消息的函数，通过这个我们能抛出自定义的一些消息被当作错误来处理，比如严重的逻辑问题</p>
-<p>上面的程序我们看到，当程序出错时，除了让 PHP 默认输出出错信息外，我们还能设置自己的错误处理函数，设置的方法就是set_error_handler(),下面来看个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">   echo &quot;dddddddddddd&lt;&#x2F;br&gt;&quot;;  </span><br><span class="line">   echo $cc;&#x2F;&#x2F;$cc没有定义，echo会出错  </span><br><span class="line">   function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">       if($errno&#x3D;&#x3D;E_NOTICE)&#123;  </span><br><span class="line">           echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">       &#125;  </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<p> 输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dddddddddddd</span><br><span class="line">innnnnnnni:Undefined variable: cc</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/catch/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iconv" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/iconv/">iconv的使用方法(转换编码,截取字符串,统计长度)</a>
+    <h1 class="article-title" itemprop="name">
+      iconv的使用方法(转换编码,截取字符串,统计长度)
     </h1>
   
 
@@ -481,83 +255,26 @@
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/iconv/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-baidu" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/baidu/">百度语音接口简单使用</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/baidu/" class="archive-article-date">
-  	<time datetime="2020-04-20T10:23:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-type:text&#x2F;html;charset&#x3D;utf-8&quot;);</span><br><span class="line">define(&#39;AUDIO_FILE&#39;, &quot;.&#x2F;test2.pcm&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;put your params here</span><br><span class="line">$cuid &#x3D; &quot;&quot;;</span><br><span class="line">$apiKey &#x3D; &quot;&quot;;</span><br><span class="line">$secretKey &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">$auth_url &#x3D; &quot;https:&#x2F;&#x2F;openapi.baidu.com&#x2F;oauth&#x2F;2.0&#x2F;token?grant_type&#x3D;client_credentials&amp;client_id&#x3D;&quot;.$apiKey.&quot;&amp;client_secret&#x3D;&quot;.$secretKey;</span><br><span class="line">$ch &#x3D; curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $auth_url);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);</span><br><span class="line"> curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);</span><br><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);</span><br><span class="line">$response &#x3D; curl_exec($ch);</span><br><span class="line">if(curl_errno($ch))</span><br><span class="line">&#123;</span><br><span class="line">    print curl_error($ch);</span><br><span class="line">&#125;</span><br><span class="line">curl_close($ch);</span><br><span class="line">$response &#x3D; json_decode($response, true);</span><br><span class="line">$token &#x3D; $response[&#39;access_token&#39;];</span><br><span class="line"></span><br><span class="line">$url &#x3D; &quot;http:&#x2F;&#x2F;vop.baidu.com&#x2F;server_api?cuid&#x3D;&quot;.$cuid.&quot;&amp;token&#x3D;&quot;.$token;</span><br><span class="line">&#x2F;&#x2F;$url &#x3D; $url.&quot;&amp;lan&#x3D;zh&quot;;</span><br><span class="line">$audio &#x3D; file_get_contents(AUDIO_FILE);</span><br><span class="line">$content_len &#x3D; &quot;Content-Length: &quot;.strlen($audio);</span><br><span class="line">$header &#x3D; array ($content_len,&#39;Content-Type: audio&#x2F;pcm; rate&#x3D;8000&#39;,);</span><br><span class="line">$ch &#x3D; curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_HTTPHEADER, $header);</span><br><span class="line">curl_setopt($ch, CURLOPT_POST, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);</span><br><span class="line">curl_setopt($ch, CURLOPT_TIMEOUT, 30);</span><br><span class="line">curl_setopt($ch, CURLOPT_POSTFIELDS, $audio);</span><br><span class="line">$response &#x3D; curl_exec($ch);</span><br><span class="line">if(curl_errno($ch))</span><br><span class="line">&#123;</span><br><span class="line">    print curl_error($ch);</span><br><span class="line">&#125;</span><br><span class="line">curl_close($ch);</span><br><span class="line">echo $response;</span><br><span class="line">$response &#x3D; json_decode($response, true);</span><br><span class="line">&#x2F;&#x2F;var_dump($response);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>测试的时候官方会提示一个 3300 的错误 是证书验证不通过 特在此记录一下</p>
-<p>在第一个 curl 里面加上下面语句就 ok 了 有兴趣的可以试一下吧</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#96;curl_setopt(&#96;&#96;$ch&#96;&#96;, CURLOPT_SSL_VERIFYPEER, FALSE);&#96;</span><br><span class="line"></span><br><span class="line">&#96;curl_setopt(&#96;&#96;$ch&#96;&#96;, CURLOPT_SSL_VERIFYHOST, FALSE);&#96;</span><br></pre></td></tr></table></figure>
-
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -577,16 +294,84 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/baidu/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/iconv/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/04/20/catch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          php异常、错误处理机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/20/baidu/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">百度语音接口简单使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -606,284 +391,14 @@
 
 
 
-
   
-    <article id="post-session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/session/">session和cookie的区别</a>
-    </h1>
   
 
-        
-        <a href="/2020/04/20/session/" class="archive-article-date">
-  	<time datetime="2020-04-20T10:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>——————————————<strong>session 的使用</strong>————————————–</p>
-<p>session 中同一浏览器同一站点只能有一个 session_id,下面我们一起来看看关于 session 使用方法。<br>如何使用 session，凡是与 session 有关的，之前必须调用函数 session_start();<br>为 session 赋值很简单，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">Session_start();</span><br><span class="line">$Name &#x3D; &quot;这是一个Session例子&quot;;</span><br><span class="line">Session_Register(&quot;Name&quot;);&#x2F;&#x2F;注意,不要写成：Session_Register(&quot;$Name&quot;);</span><br><span class="line">echo $_SESSION[&quot;Name&quot;];</span><br><span class="line">&#x2F;&#x2F;输出$_SESSION[&quot;Name&quot;]为&quot;这是一个Session例子&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>取消 session 可以这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">session_unset();</span><br><span class="line">session_destroy();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>读取 session</p>
-<p>PHP 内置的 $_SESSION 变量可以很方便的访问设置的 session 变量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">echo &quot;登记的用户名为：&quot;.$_SESSION[&quot;username&quot;];    &#x2F;&#x2F;输出 登记的用户名为：nostop</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>检查变量是否被登记为会话变量 session_is_registered<br>语法：boobean session_is_registered(string name);<br>这个函数可检查当前的 session 之中是否已有指定的变量注册，参数 name 就是要检查的变量名。成功则返回逻辑值 true。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    session_start();</span><br><span class="line">    if(!session_is_registered(&quot;gender&quot;))&#123; &#x2F;&#x2F;判断当前会话变量是否注册</span><br><span class="line">        session_register(&quot;gender&quot;);    &#x2F;&#x2F;注册变量</span><br><span class="line">    &#125;</span><br><span class="line">    $gender&#x3D;&quot;女&quot;;</span><br></pre></td></tr></table></figure>
-<p>?&gt;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话名称  session_name</span><br><span class="line">语法：boolean session_name(string [name]);</span><br><span class="line">这个函数可取得或重新设置当前 session 的名称。若无参数 name 则表示获取当前 session 名称，加上参数则表示将 session 名称设为参数 name。</span><br></pre></td></tr></table></figure>
-<?php
-$sessionName = session_name();   //取得当前 Session 名，默认为 PHPSESSID
-$sessionID = $_GET[$sessionName];   //取得 Session ID
-session_id($sessionID);      //使用 session_id() 设置获得的 Session ID
-?>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话标识号 session_id</span><br><span class="line">语法：boolean session_id(string [id]);</span><br><span class="line">这个函数可取得或重新设置当前存放 session 的标识号。若无参数 id 则表示只获取当前 session 的标识号，加上参数则表示将 session 的标识号设成新指定的 id。</span><br><span class="line">设置 Session 的生存期</span><br></pre></td></tr></table></figure>
-<?php
-    session_start
-    // 保存一天
-    $lifeTime = 24 * 3600;
-    setcookie(session_name(), session_id(), time() + $lifeTime, "/");
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">session_set_cookie_params:设置 Session 的生存期的，该函数必须在 session_start() 函数调用之前调用。</span><br><span class="line">如果客户端使用 IE 6.0 ， session_set_cookie_params(); 函数设置 Cookie 会有些问题，所以我们还是手动调用 setcookie 函数来创建 cookie。</span><br></pre></td></tr></table></figure>
-<?php
-// 保存一天
-　　$lifeTime = 24 * 3600;
-　　session_set_cookie_params($lifeTime);
-　　session_start();
-　　$_session["admin"] = true;
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">设置 Session 文件的保存路径</span><br><span class="line">session_save_path() ：必须在 session_start() 函数调用之前调用</span><br></pre></td></tr></table></figure>
-<?php
-　　// 设置一个存放目录
-　　$savePath = "./session_save_dir/";
-　　// 保存一天
-　　$lifeTime = 24 * 3600;
-　　session_save_path($savePath);
-　　session_set_cookie_params($lifeTime);
-　　session_start();
-　　$_session["admin"] = true;
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<?php
-session_start();    //启动Session
-$username='nostop';
-session_register('username');    //注册一个名为username变量
-echo '登记的用户：'.$_SESSION['username'];    //登记的用户：nostop   读取Session变量
-
-$_SESSION['age']=23;    //声明一个名为age的变量，并赋值
-echo '年龄：'.$_SESSION['age']; //年龄：23
-
-session_unregister('username'); //注销Session变量
-echo $_SESSION['username'];  //空
-echo $_SESSION['age'];//23
-
-unset($_SESSION['age']); //注销Session变量
-echo '登记的用户：'.$_SESSION['username']; //空
-echo '年龄：'.$_SESSION['age']; //空
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意：1:在调用 Session_Start()之前不能有任何输出。例如下面是错误的。</span><br></pre></td></tr></table></figure>
-<?PHP
- Session_Start();//之前在第一行已经有输出
- .....
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">提示 1:</span><br><span class="line"></span><br><span class="line">凡是出现&quot;........headers already sent..........&quot;,就是 Session_Start()之前向浏览器输出信息。</span><br><span class="line">去掉输出就正常，（COOKIE 也会出现这种错误，错误原因一样）</span><br><span class="line"></span><br><span class="line">提示 2:</span><br><span class="line"></span><br><span class="line">如果你的 Session_Start()放在循环语句里，并且很难确定之前哪里向浏览器输出信息，可以用下面这种方法：</span><br><span class="line">1 行 &lt;?PHP Ob_Start(); ?&gt;</span><br><span class="line">........这里是你的程序......</span><br><span class="line"></span><br><span class="line">2:这是什么错误</span><br><span class="line"></span><br><span class="line">Warning: session_start(): open(&#x2F;tmpsess_7d190aa36b4c5ec13a5c1649cc2da23f, O_RDWR) failed:....</span><br><span class="line">因为你没有指定 session 文件的存放路径。</span><br><span class="line"></span><br><span class="line">解决方法：</span><br><span class="line"></span><br><span class="line">(1)在 c 盘建立文件夹 tmp</span><br><span class="line">(2)打开 php.ini,找到 session.save_path,修改为 session.save_path&#x3D; &quot;c:&#x2F;tmp&quot;</span><br><span class="line"></span><br><span class="line">------------------------------------------**PHP cookie 的使用以及坑**--------------------------------------</span><br><span class="line"></span><br><span class="line">1.设置 cookie</span><br></pre></td></tr></table></figure>
-<p>setcookie(‘uid’, 3, time()+3600, ‘/‘, $_SERVER[‘HTTP_HOST’]);  // cookie 名字 cookie 值  过期时间  path 保存目录 作用域</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.设置 cookie 的过期</span><br></pre></td></tr></table></figure>
-<p>setcookie(‘uid’, 0, 0, ‘/‘, $_SERVER[‘HTTP_HOST’]);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.cookie 的坑 url 区分大小写</span><br><span class="line"></span><br><span class="line">如果不加第四个参数  可能会在 url 大小写下出现获取不到 cookie 所以一定要加上域名的作用域</span><br><span class="line"></span><br><span class="line">4.语法</span><br></pre></td></tr></table></figure>
-<ol>
-<li>setcookie(name,value,expire,path,domain,secure)<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>name</td>
-<td>必需。规定 cookie 的名称。</td>
-</tr>
-<tr>
-<td>value</td>
-<td>必需。规定 cookie 的值。</td>
-</tr>
-<tr>
-<td>expire</td>
-<td>可选。规定 cookie 的有效期。</td>
-</tr>
-<tr>
-<td>path</td>
-<td>可选。规定 cookie 的服务器路径。</td>
-</tr>
-<tr>
-<td>domain</td>
-<td>可选。规定 cookie 的域名。</td>
-</tr>
-<tr>
-<td>secure</td>
-<td>可选。规定是否通过安全的 HTTPS 连接来传输 cookie。</td>
-</tr>
-<tr>
-<td>```</td>
-<td></td>
-</tr>
-</tbody></table>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/session/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/hexo/">hexo 使用教程</a>
-    </h1>
   
 
-        
-        <a href="/2020/04/20/hexo/" class="archive-article-date">
-  	<time datetime="2020-04-20T07:16:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h3><p>获得个人网站域名<br>GitHub创建个人仓库<br>安装Git<br>安装Node.js<br>安装Hexo<br>推送网站<br>绑定域名<br>更换主题<br>初识MarkDown语法<br>发布文章<br>寻找图床<br>个性化设置<br>其他<br>附录</p>
-<h2 id="1-首先安装-node和npm-git-这些软件-以及注册github"><a href="#1-首先安装-node和npm-git-这些软件-以及注册github" class="headerlink" title="1.首先安装 node和npm git 这些软件 以及注册github"></a>1.首先安装 node和npm git 这些软件 以及注册github</h2><h2 id="2-安装hexo"><a href="#2-安装hexo" class="headerlink" title="2.安装hexo"></a>2.安装hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-cli -g  安装Hexo</span><br><span class="line">hexo init blog   建立一个项目</span><br></pre></td></tr></table></figure>
-<h2 id="3-连接Github与本地"><a href="#3-连接Github与本地" class="headerlink" title="3.连接Github与本地"></a>3.连接Github与本地</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;godweiyang&quot;</span><br><span class="line">git config --global user.email &quot;792321264@qq.com&quot;</span><br><span class="line">用户名和邮箱根据你注册github的信息自行修改。</span><br><span class="line">然后生成密钥SSH key：</span><br><span class="line">ssh-keygen -t rsa -C &quot;792321264@qq.com&quot;</span><br><span class="line">打开github，在头像下面点击settings，再点击SSH and GPG keys，新建一个SSH，名字随便。</span><br><span class="line">cat ~&#x2F;.ssh&#x2F;id_rsa.pub</span><br><span class="line">将输出的内容复制到框中，点击确定保存。</span><br><span class="line">在终端输入ssh -T git@github.com，如果如下图所示，出现你的用户名，那就成功了</span><br><span class="line">打开博客根目录下的_config.yml文件，这是博客的配置文件，在这里你可以修改与博客相关的各种信息。</span><br><span class="line"></span><br><span class="line">修改最后一行的配置：</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https:&#x2F;&#x2F;github.com&#x2F;godweiyang&#x2F;godweiyang.github.io</span><br><span class="line">  branch: master</span><br><span class="line">repository修改为你自己的github项目地址。</span><br></pre></td></tr></table></figure>
-<h2 id="4-hexo命令"><a href="#4-hexo命令" class="headerlink" title="4.hexo命令"></a>4.hexo命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;article title&quot;，新建一篇文章。</span><br><span class="line">hexo generate 生成静态文件</span><br><span class="line">hexo server  运行hexo服务器</span><br><span class="line">hexo deploy  将Hexo上传到Github</span><br></pre></td></tr></table></figure>
-<h2 id="5-建立标签分类"><a href="#5-建立标签分类" class="headerlink" title="5.建立标签分类"></a>5.建立标签分类</h2><p>生成”分类”<br>hexo new page categories，来新建一个页面，并命名为categories。成功后会提示：INFO Created: ~/hexo/source/categories/index.md<br>根据上面的路径找到index.md这个文件，打开后默认内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br></pre></td></tr></table></figure>
-<p>编辑新创建的页面，添加type: “categories”到内容中(注意，这些属性和属性值之间必须有一个空格)，主题将自动为这个页面显示所有分类，添加后是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure>
-<p>保存并关闭文件。</p>
-<p>给文章添加”categories”属性<br>打开需要添加分类的文章，为其添加categories属性。下方的categories: Python表示添加这篇文章到“Python”这个分类中。</p>
-<p>注意：Hexo中一篇文章只能属于一个分类，也就是说如果在”Python”下方添加”-xxx”，Hexo不会产生两个分类，而是把分类嵌套，即该文章属于”Python“下的”-xxx“分类。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: Python中*args和**kwargs的用法总结</span><br><span class="line">categories: Python</span><br></pre></td></tr></table></figure>
-<p>回到hexo文件夹下，依次执行hexo g，hexo server和hexo deploy命令(重新部署)。</p>
-<p>在Hexo菜单上添加分类选项</p>
-<p>menu:<br>  Python: /Python<br>##6.遇到问题<br>hexo d命令报错 ERROR Deployer not found: git</p>
-<p>解决方案<br>这是因为没安装hexo-deployer-git插件，在站点目录下输入下面的插件安装就好了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/oneself//" class="article-tag-list-link color3">oneself</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/hexo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -906,8 +421,8 @@ echo '年龄：'.$_SESSION['age']; //空
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
