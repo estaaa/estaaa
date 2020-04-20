@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 道法自然</title>
+  <title>linux sed命令详解 | 道法自然</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="php教程 js教程 php博客 linux教程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="道法自然">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="简介sed 是一种在线编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用 sed 命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有 改变，除非你使用重定向存储输出。Sed 主要用来自动编辑一个或多个文件；简化对文件的反复操作；编写转换程序等。 sed 使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux sed命令详解">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/sed/index.html">
 <meta property="og:site_name" content="道法自然">
-<meta property="og:description" content="php教程 js教程 php博客 linux教程">
+<meta property="og:description" content="简介sed 是一种在线编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用 sed 命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有 改变，除非你使用重定向存储输出。Sed 主要用来自动编辑一个或多个文件；简化对文件的反复操作；编写转换程序等。 sed 使用">
 <meta property="og:locale" content="ch">
+<meta property="article:published_time" content="2020-04-20T11:21:11.000Z">
+<meta property="article:modified_time" content="2020-04-20T11:21:49.000Z">
 <meta property="article:author" content="道法自然">
 <meta property="article:tag" content="php教程 js教程 php博客 linux教程">
 <meta name="twitter:card" content="summary">
@@ -181,405 +183,275 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-sed" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux sed命令详解
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/sed/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h2><p>sed 是一种在线编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用 sed 命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有 改变，除非你使用重定向存储输出。Sed 主要用来自动编辑一个或多个文件；简化对文件的反复操作；编写转换程序等。</p>
+<h2 id="sed-使用参数"><a href="#sed-使用参数" class="headerlink" title="sed 使用参数"></a><strong>sed 使用参数</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# sed [-nefr] [动作]</span><br><span class="line">选项与参数：</span><br><span class="line">-n ：使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN 的数据一般都会被列出到终端上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。</span><br><span class="line">-e ：直接在命令列模式上进行 sed 的动作编辑；</span><br><span class="line">-f ：直接将 sed 的动作写在一个文件内， -f filename 则可以运行 filename 内的 sed 动作；</span><br><span class="line">-r ：sed 的动作支持的是延伸型正规表示法的语法。(默认是基础正规表示法语法)</span><br><span class="line">-i ：直接修改读取的文件内容，而不是输出到终端。</span><br><span class="line"></span><br><span class="line">动作说明： [n1[,n2]]function</span><br><span class="line">n1, n2 ：不见得会存在，一般代表『选择进行动作的行数』，举例来说，如果我的动作是需要在 10 到 20 行之间进行的，则『 10,20[动作行为] 』</span><br><span class="line"></span><br><span class="line">function：</span><br><span class="line">a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～</span><br><span class="line">c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！</span><br><span class="line">d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；</span><br><span class="line">i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；</span><br><span class="line">p ：列印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～</span><br><span class="line">s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s&#x2F;old&#x2F;new&#x2F;g 就是啦！</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="以行为单位的新增-删除"><a href="#以行为单位的新增-删除" class="headerlink" title="以行为单位的新增/删除"></a><strong>以行为单位的新增/删除</strong></h2><p>将 /etc/passwd 的内容列出并且列印行号，同时，请将第 2~5 行删除！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed &#39;2,5d&#39;</span><br><span class="line">1 root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">6 sync:x:5:0:sync:&#x2F;sbin:&#x2F;bin&#x2F;sync</span><br><span class="line">7 shutdown:x:6:0:shutdown:&#x2F;sbin:&#x2F;sbin&#x2F;shutdown</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure>
+
+<p>sed 的动作为 ‘2,5d’ ，那个 d 就是删除！因为 2-5 行给他删除了，所以显示的数据就没有 2-5 行罗 ～ 另外，注意一下，原本应该是要下达 sed -e 才对，没有 -e 也行啦！同时也要注意的是， sed 后面接的动作，请务必以 ‘’ 两个单引号括住喔！</p>
+<p>只要删除第 2 行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed &#39;2d&#39;</span><br></pre></td></tr></table></figure>
+
+
+<p>要删除第 3 到最后一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed &#39;3,$d&#39;</span><br></pre></td></tr></table></figure>
+
+
+<p>在第二行后(亦即是加在第三行)加上『drink tea?』字样！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed &#39;2a drink tea&#39;</span><br><span class="line">1 root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">2 bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">drink tea</span><br><span class="line">3 daemon:x:2:2:daemon:&#x2F;sbin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure>
+
+
+
+<p>那如果是要在第二行前</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed &#39;2i drink tea&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>如果是要增加两行以上，在第二行后面加入两行字，例如『Drink tea or …..』与『drink beer?』</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed &#39;2a Drink tea or ......\</span><br><span class="line">&gt; drink beer ?&#39;</span><br><span class="line">root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">Drink tea or ......</span><br><span class="line">drink beer ?</span><br><span class="line">daemon:x:2:2:daemon:&#x2F;sbin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure>
+
+<p>每一行之间都必须要以反斜杠『 \ 』来进行新行的添加喔！所以，上面的例子中，我们可以发现在第一行的最后面就有 \ 存在。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p><strong>以行为单位的替换与显示</strong></p>
+<p>将第 2-5 行的内容取代成为『No 2-5 number』呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed &#39;2,5c No 2-5 number&#39;</span><br><span class="line">1 root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">No 2-5 number</span><br><span class="line">6 sync:x:5:0:sync:&#x2F;sbin:&#x2F;bin&#x2F;sync</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure>
+
+
+
+<p>透过这个方法我们就能够将数据整行取代了！</p>
+<p>仅列出 /etc/passwd 文件内的第 5-7 行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed -n &#39;5,7p&#39;</span><br><span class="line">5 lp:x:4:7:lp:&#x2F;var&#x2F;spool&#x2F;lpd:&#x2F;sbin&#x2F;nologin</span><br><span class="line">6 sync:x:5:0:sync:&#x2F;sbin:&#x2F;bin&#x2F;sync</span><br><span class="line">7 shutdown:x:6:0:shutdown:&#x2F;sbin:&#x2F;sbin&#x2F;shutdown</span><br></pre></td></tr></table></figure>
+
+<p>可以透过这个 sed 的以行为单位的显示功能， 就能够将某一个文件内的某些行号选择出来显示。</p>
+<h2 id="数据的搜寻并显示"><a href="#数据的搜寻并显示" class="headerlink" title="数据的搜寻并显示"></a><strong>数据的搜寻并显示</strong></h2><p>搜索 /etc/passwd 有 root 关键字的行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed &#39;&#x2F;root&#x2F;p&#39;</span><br><span class="line">1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">2  daemon:x:1:1:daemon:&#x2F;usr&#x2F;sbin:&#x2F;bin&#x2F;sh</span><br><span class="line">3  bin:x:2:2:bin:&#x2F;bin:&#x2F;bin&#x2F;sh</span><br><span class="line">4  sys:x:3:3:sys:&#x2F;dev:&#x2F;bin&#x2F;sh</span><br><span class="line">5  sync:x:4:65534:sync:&#x2F;bin:&#x2F;bin&#x2F;sync</span><br><span class="line">....下面忽略 [![复制代码]</span><br></pre></td></tr></table></figure>
+
+<p>如果 root 找到，除了输出所有行，还会输出匹配行。</p>
+<p>使用-n 的时候将只打印包含模板的行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed -n &#39;&#x2F;root&#x2F;p&#39;</span><br><span class="line">1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="数据的搜寻并删除"><a href="#数据的搜寻并删除" class="headerlink" title="数据的搜寻并删除"></a><strong>数据的搜寻并删除</strong></h2><p>删除/etc/passwd 所有包含 root 的行，其他行输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed  &#39;&#x2F;root&#x2F;d&#39;</span><br><span class="line">2  daemon:x:1:1:daemon:&#x2F;usr&#x2F;sbin:&#x2F;bin&#x2F;sh</span><br><span class="line">3  bin:x:2:2:bin:&#x2F;bin:&#x2F;bin&#x2F;sh</span><br><span class="line">....下面忽略</span><br></pre></td></tr></table></figure>
+<p>#第一行的匹配 root 已经删除了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# nl &#x2F;etc&#x2F;passwd | sed -n &#39;5,7p&#39;</span><br><span class="line">5 lp:x:4:7:lp:&#x2F;var&#x2F;spool&#x2F;lpd:&#x2F;sbin&#x2F;nologin</span><br><span class="line">6 sync:x:5:0:sync:&#x2F;sbin:&#x2F;bin&#x2F;sync</span><br><span class="line">7 shutdown:x:6:0:shutdown:&#x2F;sbin:&#x2F;sbin&#x2F;shutdown</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="数据的搜寻并执行命令"><a href="#数据的搜寻并执行命令" class="headerlink" title="数据的搜寻并执行命令"></a><strong>数据的搜寻并执行命令</strong></h2><p>找到匹配模式 eastern 的行后，</p>
+<p>搜索/etc/passwd,找到 root 对应的行，执行后面花括号中的一组命令，每个命令之间用分号分隔，这里把 bash 替换为 blueshell，再输出这行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed -n &#39;&#x2F;root&#x2F;&#123;s&#x2F;bash&#x2F;blueshell&#x2F;;p&#125;&#39;</span><br><span class="line"> 1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;blueshell</span><br></pre></td></tr></table></figure>
+
+
+<p>如果只替换/etc/passwd 的第一个 bash 关键字为 blueshell，就退出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed -n &#39;&#x2F;bash&#x2F;&#123;s&#x2F;bash&#x2F;blueshell&#x2F;;p;q&#125;&#39;    </span><br><span class="line">1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;blueshell</span><br></pre></td></tr></table></figure>
+<p>最后的 q 是退出。</p>
+<h2 id="数据的搜寻并替换"><a href="#数据的搜寻并替换" class="headerlink" title="数据的搜寻并替换"></a><strong>数据的搜寻并替换</strong></h2><p>除了整行的处理模式之外， sed 还可以用行为单位进行部分数据的搜寻并取代。基本上 sed 的搜寻与替代的与 vi 相当的类似！他有点像这样：</p>
+<p>sed ‘s/要被取代的字串/新的字串/g’</p>
+<p>先观察原始信息，利用 /sbin/ifconfig 查询 IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# &#x2F;sbin&#x2F;ifconfig eth0</span><br><span class="line">eth0 Link encap:Ethernet HWaddr 00:90:CC:A6:34:84</span><br><span class="line">inet addr:192.168.1.100 Bcast:192.168.1.255 Mask:255.255.255.0</span><br><span class="line">inet6 addr: fe80::290:ccff:fea6:3484&#x2F;64 Scope:Link</span><br><span class="line">UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1</span><br><span class="line">.....(以下省略).....</span><br></pre></td></tr></table></figure>
+
+
+
+<p>本机的 ip 是 192.168.1.100。</p>
+<p>将 IP 前面的部分予以删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# &#x2F;sbin&#x2F;ifconfig eth0 | grep &#39;inet addr&#39; | sed &#39;s&#x2F;^.*addr:&#x2F;&#x2F;g&#39;</span><br><span class="line">192.168.1.100 Bcast:192.168.1.255 Mask:255.255.255.0</span><br></pre></td></tr></table></figure>
+
+
+<p>接下来则是删除后续的部分，亦即： 192.168.1.100 Bcast:192.168.1.255 Mask:255.255.255.0</p>
+<p>将 IP 后面的部分予以删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# &#x2F;sbin&#x2F;ifconfig eth0 | grep &#39;inet addr&#39; | sed &#39;s&#x2F;^.*addr:&#x2F;&#x2F;g&#39; | sed &#39;s&#x2F;Bcast.*$&#x2F;&#x2F;g&#39;</span><br><span class="line">192.168.1.100</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="多点编辑"><a href="#多点编辑" class="headerlink" title="多点编辑"></a><strong>多点编辑</strong></h2><p>一条 sed 命令，删除/etc/passwd 第三行到末尾的数据，并把 bash 替换为 blueshell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nl &#x2F;etc&#x2F;passwd | sed -e &#39;3,$d&#39; -e &#39;s&#x2F;bash&#x2F;blueshell&#x2F;&#39;</span><br><span class="line">1  root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;blueshell</span><br><span class="line">2  daemon:x:1:1:daemon:&#x2F;usr&#x2F;sbin:&#x2F;bin&#x2F;sh</span><br></pre></td></tr></table></figure>
+<p>-e 表示多点编辑，第一个编辑命令删除/etc/passwd 第三行到末尾的数据，第二条命令搜索 bash 替换为 blueshell。</p>
+<h2 id="直接修改文件内容-危险动作"><a href="#直接修改文件内容-危险动作" class="headerlink" title="直接修改文件内容(危险动作)"></a><strong>直接修改文件内容(危险动作)</strong></h2><p>sed 可以直接修改文件的内容，不必使用管道命令或数据流重导向！ 不过，由於这个动作会直接修改到原始的文件，所以请你千万不要随便拿系统配置来测试！ 我们还是使用下载的 regular_express.txt 文件来测试看看吧！</p>
+<p>利用 sed 将 regular_express.txt 内每一行结尾若为 . 则换成 !</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# sed -i &#39;s&#x2F;\.$&#x2F;\!&#x2F;g&#39; regular_express.txt</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>利用 sed 直接在 regular_express.txt 最后一行加入『# This is a test』</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# sed -i &#39;$a # This is a test&#39; regular_express.txt</span><br></pre></td></tr></table></figure>
+
+
+<p>由於 $ 代表的是最后一行，而 a 的动作是新增，因此该文件最后新增『# This is a test』！</p>
+<p>sed 的『 -i 』选项可以直接修改文件内容，这功能非常有帮助！举例来说，如果你有一个 100 万行的文件，你要在第 100 行加某些文字，此时使用 VIM 可能会疯掉！因为文件太大了！那怎办？就利用 sed 啊！透过 sed 直接修改/取代的功能，你甚至不需要使用 VIM 去修订！</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/hls/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/hls/">Nginx与Nginx-rtmp-module搭建hls源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/sed/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/live/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:50:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/04/20/swoole_up/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PhpStorm 增加Swoole智能提示
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/20/file_get_contents/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PHP file_get_contents函数详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/live/">Nginx与Nginx-rtmp-module搭建RTMP视频直播和点播服务器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/nginx_rtmp_module/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/nginx_rtmp_module/">nginx 安装nginx-rtmp-module模块</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_base_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:35:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_base_function/">PHP常用函数</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:34:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_function/">php 常用系统函数</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/mysql01/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:33:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/mysql01/">mysql 高级操作语句</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mysql//" class="article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_yufa/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:31:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_yufa/">php 语法大全</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/fastcgi_socket/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/fastcgi_socket/">fastcgi_pass 使用socket连接还是tcp连接</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/more_php_fpm/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:29:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/more_php_fpm/">启动多配置php-fpm</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_mianshi02/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_mianshi02/">php--面试大全2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -603,8 +475,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

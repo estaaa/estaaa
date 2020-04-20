@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 道法自然</title>
+  <title>laravel的基本用法 | 道法自然</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="php教程 js教程 php博客 linux教程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="道法自然">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="1.首先设置key安装 Laravel 之后下一件应该做的事就是将应用程序的密钥设置为随机字符串。如果你是通过 Composer 或 Laravel 安装器安装的 Laravel，那这个密钥已经为你通过  1php artisan key:generate 命令设置好了。 通常来说，这个字符串长度为 32 个字符。密钥可以在 .env 环境文件中设置。前提是你要将 .env.example 文件重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="laravel的基本用法">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/laravel01/index.html">
 <meta property="og:site_name" content="道法自然">
-<meta property="og:description" content="php教程 js教程 php博客 linux教程">
+<meta property="og:description" content="1.首先设置key安装 Laravel 之后下一件应该做的事就是将应用程序的密钥设置为随机字符串。如果你是通过 Composer 或 Laravel 安装器安装的 Laravel，那这个密钥已经为你通过  1php artisan key:generate 命令设置好了。 通常来说，这个字符串长度为 32 个字符。密钥可以在 .env 环境文件中设置。前提是你要将 .env.example 文件重">
 <meta property="og:locale" content="ch">
+<meta property="article:published_time" content="2020-04-20T11:24:53.000Z">
+<meta property="article:modified_time" content="2020-04-20T11:25:25.000Z">
 <meta property="article:author" content="道法自然">
 <meta property="article:tag" content="php教程 js教程 php博客 linux教程">
 <meta name="twitter:card" content="summary">
@@ -181,151 +183,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-laravel01" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      laravel的基本用法
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/laravel01/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:24:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>1.首先设置key</strong><br>安装 Laravel 之后下一件应该做的事就是将应用程序的密钥设置为随机字符串。如果你是通过 Composer 或 Laravel 安装器安装的 Laravel，那这个密钥已经为你通过 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan key:generate 命令设置好了。</span><br></pre></td></tr></table></figure>
+<p>通常来说，这个字符串长度为 32 个字符。密钥可以在 .env 环境文件中设置。前提是你要将 .env.example 文件重命名为 .env。如果应用程序密钥没有被设置，就不能确保你的用户会话和其他加密数据的安全！</p>
+<p><strong>2.laravel设置维护模式</strong><br>要启用维护模式，只需执行下面的 Artisan 命令 down：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan down</span><br></pre></td></tr></table></figure>
+<p>你还可以向 down 命令提供 message 和 retry 选项。其中 message 选项的值可用于显示或记录自定义消息，而 retry 值可用于设置 HTTP 请求头中 Retry-After 的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan down --message&#x3D;&quot;Upgrading Database&quot; --retry&#x3D;60</span><br></pre></td></tr></table></figure>
+<p>即使在维护模式下，也可以使用命令 allow 选项允许特定的 IP 地址或网络访问应用程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan down --allow&#x3D;127.0.0.1 --allow&#x3D;192.168.0.0&#x2F;16</span><br></pre></td></tr></table></figure>
+<p>要关闭维护模式，请使用 up 命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan up</span><br></pre></td></tr></table></figure>
+<p><strong>3.Artisan命令生成工具</strong><br>eptions 目录包含了应用的异常处理器，也是应用抛出异常的好地方。如果想自定义记录或者渲染异常的方式，你就要修改此目录下的 Handler 类。</p>
+<p>Http 目录<br>Http 目录包含了控制器、中间件和表单请求。几乎所有的进入应用的请求的处理逻辑都被放在这里。</p>
+<p>Jobs 目录<br>Jobs 目录默认是不存在的，它会在你运行 Artisan 命令 make:job 时生成。这个目录存放了应用中的 队列任务 。 应用的任务可以被推送到队列或者在当前请求的生命周期内同步运行。在当前请求期间同步运行的任务可以看做是一个「命令」，因为它们是 命令模式 的实现。</p>
+<p>Listeners 目录<br>Listeners 目录默认是不存在的，它会在你运行 Artisan 命令 event:generate 或 make:listener 时生成。Listeners 目录包含了用来处理 事件 的类。事件监听器接收事件实例并执行响应该事件被触发的逻辑。例如， UserRegistered 事件可能由 SendWelcomeEmail 监听器处理。</p>
+<p>Mail 目录<br>Mail 目录默认不存在，它会在你运行 Artisan 命令 make:mail 时生成。 Mail 目录包含应用所有的邮件发送类。邮件对象允许你将邮件的逻辑封装单个类中，邮件对象还可以使用 Mail::send 方法来发送邮件。</p>
+<p>Notifications 目录<br>Notifications 目录默认不存在，它会在你运行 Artisan 命令 make:notification 时生成。 Notifications 目录包含应用发送的所有「业务性」通知，比如关于在应用中发生的事件的简单通知。Laravel 的通知功能抽象了发送通知接口，你可以通过各种驱动（例如邮件、Slack、短信）发送通知，或是存储在数据库中。</p>
+<p>Policies 目录<br>Policies 目录默认不存在，它会通过运行 Artisan 命令 make:policy 来创建。 Policies 目录包含了应用的授权策略类。策略可以用来决定一个用户是否有权限去操作指定资源。更多详情可以查看 授权文档。</p>
+<p>Providers 目录<br>Providers 目录包含了应用的所有 服务提供者 。服务提供者通过在服务容器中绑定服务、注册事件、以及执行其他任务来为即将到来的请求做准备来启动应用。</p>
+<p>在一个新的 Laravel 应用里，Providers 目录已经包含了一些服务提供者。你可以按照需要把自己的服务提供者添加到该目录。</p>
+<p>Rules 目录<br>Rules 目录默认不存在，它会在运行 Artisan 命令 make:rule 命令时被创建。Rules 目录包含应用自定义验证规则对象。这些规则意在将复杂的验证逻辑封装在一个简单的对象中。</p>
+<p><strong>4.优化自动加载</strong><br>部署项目到生产环境时，请确保你优化了 Composer 类的自动加载映射，以便 Composer 可以快速找到正确文件为给定类加载：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install --optimize-autoloader --no-dev</span><br></pre></td></tr></table></figure>
+<p>{tip} 除了优化自动加载之外，还应该确保项目的源代码管理库中包含了 composer.lock 文件。因为当 composer.lock 文件存在时，项目的依赖项可以被更快地安装。</p>
+<p>优化配置加载<br>当你将应用部署到生产环境时，请确保在部署过程中运行 Artisan 命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan config:cache</span><br></pre></td></tr></table></figure>
+<p>这个命令可以将所有 Laravel 的配置文件合并到单个文件中缓存，此举能大大减少框架在加载配置值时必须执行的系统文件的数量。</p>
+<p>{note} 如果你在部署过程中执行了 config:cache 命令，那么你应该确保仅在配置文件中调用了 env 函数，一旦配置被缓存了，将不会加载 .env 文件，（除配置文件外）对 env 函数的所有调用都将返回 null。</p>
+<p>优化路由加载<br>如果你构建的是具有许多路由的大型应用程序，那你应该在部署过程中运行 Artisan 命令 route:cache ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan route:cache</span><br></pre></td></tr></table></figure>
+<p>这个命令可以将所有路由注册减少为缓存文件中的单个方法调用，以达到当应用程序在注册数百条路由时，提高路由注册的性能。</p>
+<p>{note} 由于此功能使用 PHP 序列化，而 PHP 无法序列化闭包，因此只能缓存应用程序中基于控制器的路由。</p>
+<p><strong>5.数据库迁移</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:migration create_users_table &#x2F;&#x2F;在目录下创建一张表</span><br></pre></td></tr></table></figure>
+<p>新的迁移位于 database/migrations 目录下。每个迁移文件名都包含时间戳，以便让 Laravel 确认迁移的顺序。</p>
+<p>–table 和 –create 选项可用来指定数据表的名称，或是该迁移被执行时是否将创建的新数据表。这些选项需在预生成迁移文件时填入指定的数据表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:migration create_users_table --create&#x3D;users</span><br><span class="line"></span><br><span class="line">php artisan make:migration add_votes_to_users_table --table&#x3D;users</span><br></pre></td></tr></table></figure>
+<p>如果你想要指定生成迁移指定一个自定义输出路径，则可以在运行 make:migration 命令时添加 –path 选项，给定的路径必须是相对于应用程序的基本路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate  &#x2F;&#x2F;迁移到数据库</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/hls/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/hls/">Nginx与Nginx-rtmp-module搭建hls源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/live/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:50:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/live/">Nginx与Nginx-rtmp-module搭建RTMP视频直播和点播服务器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/nginx_rtmp_module/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/nginx_rtmp_module/">nginx 安装nginx-rtmp-module模块</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_base_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:35:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_base_function/">PHP常用函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -338,248 +287,112 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/laravel01/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:34:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/04/20/laravel02/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          laraval -- 路由的用法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/20/swoole_round/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">swoole--简单实现数据转发</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_function/">php 常用系统函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/mysql01/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:33:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/mysql01/">mysql 高级操作语句</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mysql//" class="article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_yufa/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:31:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_yufa/">php 语法大全</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/fastcgi_socket/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/fastcgi_socket/">fastcgi_pass 使用socket连接还是tcp连接</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/more_php_fpm/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:29:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/more_php_fpm/">启动多配置php-fpm</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_mianshi02/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_mianshi02/">php--面试大全2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -603,8 +416,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 道法自然</title>
+  <title>道法自然</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="php教程 js教程 php博客 linux教程">
 <meta property="og:type" content="website">
 <meta property="og:title" content="道法自然">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="道法自然">
 <meta property="og:description" content="php教程 js教程 php博客 linux教程">
 <meta property="og:locale" content="ch">
@@ -183,225 +183,36 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mysqldump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/mysqldump/">mysql的备份和导出</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/mysqldump/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.导出整个数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名</span><br><span class="line">mysqldump -u root -p dataname &gt;dataname.sql</span><br><span class="line"></span><br><span class="line">备份 MySQL 数据库的命令</span><br><span class="line">mysqldump -hhostname -uusername -ppassword databasename &gt; backupfile.sql</span><br><span class="line"></span><br><span class="line">备份 MySQL 数据库为带删除表的格式</span><br><span class="line">备份 MySQL 数据库为带删除表的格式，能够让该备份覆盖已有数据库而不需要手动删除原有数据库。</span><br><span class="line">mysqldump -–add-drop-table -uusername -ppassword databasename &gt; backupfile.sql</span><br><span class="line"></span><br><span class="line">直接将 MySQL 数据库压缩备份</span><br><span class="line">mysqldump -hhostname -uusername -ppassword databasename | gzip &gt; backupfile.sql.gz</span><br><span class="line"></span><br><span class="line">备份 MySQL 数据库某个(些)表</span><br><span class="line">mysqldump -hhostname -uusername -ppassword databasename specific_table1 specific_table2 &gt; backupfile.sql</span><br><span class="line"></span><br><span class="line">同时备份多个 MySQL 数据库</span><br><span class="line">mysqldump -hhostname -uusername -ppassword –databases databasename1 databasename2 databasename3 &gt; multibackupfile.sql</span><br><span class="line"></span><br><span class="line">仅仅备份数据库结构</span><br><span class="line">mysqldump –no-data –databases databasename1 databasename2 databasename3 &gt; structurebackupfile.sql</span><br><span class="line"></span><br><span class="line">备份服务器上所有数据库</span><br><span class="line">mysqldump –all-databases &gt; allbackupfile.sql</span><br><span class="line"></span><br><span class="line">还原 MySQL 数据库的命令</span><br><span class="line">MySQL -hhostname -uusername -ppassword databasename &lt; backupfile.sql</span><br><span class="line"></span><br><span class="line">还原压缩的 MySQL 数据库</span><br><span class="line">gunzip &lt; backupfile.sql.gz | MySQL -uusername -ppassword databasename</span><br><span class="line"></span><br><span class="line">将数据库转移到新服务器</span><br><span class="line">mysqldump -uusername -ppassword databasename | MySQL –host&#x3D;*.*.*.* -C databasename</span><br><span class="line"></span><br><span class="line">2.导出一个表</span><br><span class="line">mysqldump -u 用户名 -p 数据库名 表名 &gt; 导出的文件名</span><br><span class="line">mysqldump -u root -p dataname users&gt; dataname_users.sql</span><br><span class="line"></span><br><span class="line">3.导出一个数据库结构</span><br><span class="line">mysqldump -u wcnc -p -d –add-drop-table smgp_apps_wcnc &gt;d:\wcnc_db.sql</span><br><span class="line">-d 没有数据 –add-drop-table 在每个 create 语句之前增加一个 drop table</span><br><span class="line"></span><br><span class="line">4.导入数据库</span><br><span class="line">常用 source 命令</span><br><span class="line">进入 MySQL 数据库控制台，</span><br><span class="line">如 MySQL -u root -p</span><br><span class="line"></span><br><span class="line">mysql&gt;use 数据库</span><br><span class="line"></span><br><span class="line">然后使用 source 命令，后面参数为脚本文件（如这里用到的。SQL）</span><br><span class="line">mysql&gt;source d:\wcnc_db.sql</span><br><span class="line"></span><br><span class="line">mysqldump 支持下列选项：</span><br><span class="line">–add-locks</span><br><span class="line">在每个表导出之前增加 LOCK TABLES 并且之后 UNLOCK TABLE。(为了使得更快地插入到 MySQL)。</span><br><span class="line"></span><br><span class="line">–add-drop-table</span><br><span class="line">在每个 create 语句之前增加一个 drop table。</span><br><span class="line"></span><br><span class="line">–allow-keywords</span><br><span class="line">允许创建是关键词的列名字。这由表名前缀于每个列名做到。</span><br><span class="line"></span><br><span class="line">-c, –complete-insert</span><br><span class="line">使用完整的 insert 语句(用列名字)。</span><br><span class="line"></span><br><span class="line">-C, –compress</span><br><span class="line">如果客户和服务器均支持压缩，压缩两者间所有的信息。</span><br><span class="line"></span><br><span class="line">–delayed</span><br><span class="line">用 Insert DELAYED 命令插入行。</span><br><span class="line"></span><br><span class="line">-e, –extended-insert</span><br><span class="line">使用全新多行 Insert 语法。（给出更紧缩并且更快的插入语句）</span><br><span class="line"></span><br><span class="line">-#, –debug[&#x3D;option_string]</span><br><span class="line">跟踪程序的使用(为了调试)。</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/hls/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/hls/">Nginx与Nginx-rtmp-module搭建hls源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/live/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:50:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/live/">Nginx与Nginx-rtmp-module搭建RTMP视频直播和点播服务器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/nginx_rtmp_module/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/nginx_rtmp_module/">nginx 安装nginx-rtmp-module模块</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux-private//" class="article-tag-list-link color4">linux_private</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_base_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:35:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_base_function/">PHP常用函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_function/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:34:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_function/">php 常用系统函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/mysql01/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:33:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/mysql01/">mysql 高级操作语句</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -414,32 +225,175 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/mysqldump/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_yufa/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:31:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-scp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_yufa/">php 语法大全</a>
+      <a class="article-title" href="/2020/04/20/scp/">linux scp 服务器远程拷贝</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2020/04/20/scp/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:05:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>一、将本机文件复制到远程服务器上</code></p>
+<p><code>#scp /home/administrator/news.txt root@192.168.1.1:/etc/squid</code></p>
+<p><code>/home/administrator/      本地文件的绝对路径</code></p>
+<p><code>news.txt                          要复制到服务器上的本地文件</code></p>
+<p><code>root                                 通过root用户登录到远程服务器（也可以使用其他拥有同等权限的用户）</code></p>
+<p><code>192.168.6.129                远程服务器的ip地址（也可以使用域名或机器名）</code></p>
+<p><code>/etc/squid                       将本地文件复制到位于远程服务器上的路径</code></p>
+<p><code></code></p>
+<p><code>二、将远程服务器上的文件复制到本机</code></p>
+<p><code>#scp remote@www.abc.com:/usr/local/sin.sh /home/administrator</code></p>
+<p><code>remote                       通过remote用户登录到远程服务器（也可以使用其他拥有同等权限的用户）</code></p>
+<p><code>www.abc.com              远程服务器的域名（当然也可以使用该服务器ip地址）</code></p>
+<p><code>/usr/local/sin.sh           欲复制到本机的位于远程服务器上的文件</code></p>
+<p><code>/home/administrator  将远程文件复制到本地的绝对路径</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/scp/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-session_redis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/session_redis/">php服务器把session放到redis中</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/session_redis/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:05:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>一、将本机文件复制到远程服务器上</code></p>
+<p><code>#scp /home/administrator/news.txt root@192.168.1.1:/etc/squid</code></p>
+<p><code>/home/administrator/      本地文件的绝对路径</code></p>
+<p><code>news.txt                          要复制到服务器上的本地文件</code></p>
+<p><code>root                                 通过root用户登录到远程服务器（也可以使用其他拥有同等权限的用户）</code></p>
+<p>改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.save_handler &#x3D; redis</span><br><span class="line">session.save_path &#x3D; &quot;tcp:&#x2F;&#x2F;127.0.0.1:6379&quot;</span><br><span class="line">&quot;tcp:&#x2F;&#x2F;127.0.0.1:6379&quot;</span><br></pre></td></tr></table></figure>
+
+<p>重启 apache 以生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service httpd restart</span><br><span class="line"> httpd restart</span><br></pre></td></tr></table></figure>
+
+<p>如果是以 FastCGI 运行的（比如 nginx 就是默认 FastCGI 运行的）<br>编辑 /etc/php-fpm.d/<a href="http://www.conf（可能视系统环境而路径不一样）" target="_blank" rel="noopener">www.conf（可能视系统环境而路径不一样）</a><br>把这两行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php_value[session.save_handler] &#x3D; files</span><br><span class="line">php_value[session.save_path]    &#x3D; &#x2F;var&#x2F;lib&#x2F;php&#x2F;session</span><br><span class="line">&#x2F;var&#x2F;lib&#x2F;php&#x2F;session</span><br></pre></td></tr></table></figure>
+
+<p>改为（其实就是增加分号以注释掉）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;php_value[session.save_handler] &#x3D; files</span><br><span class="line">;php_value[session.save_path]    &#x3D; &#x2F;var&#x2F;lib&#x2F;php&#x2F;session</span><br><span class="line">&#x2F;var&#x2F;lib&#x2F;php&#x2F;session</span><br></pre></td></tr></table></figure>
+
+<p>然后增加两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php_value[session.save_handler] &#x3D; redis</span><br><span class="line">php_value[session.save_path] &#x3D; tcp:&#x2F;&#x2F;127.0.0.1:6379</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:6379</span><br></pre></td></tr></table></figure>
+
+<p>重启 PHP 服务以生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service php-fpm restart php-fpm restart</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -452,32 +406,75 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/session_redis/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/fastcgi_socket/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-file_put_contents" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/fastcgi_socket/">fastcgi_pass 使用socket连接还是tcp连接</a>
+      <a class="article-title" href="/2020/04/20/file_put_contents/">PHP写文件函数file_put_contents 加锁</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2020/04/20/file_put_contents/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:03:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>file_put_contents 写 PHP 的 Cache 文件，如果不加 LOCK_EX 就可能会存在同步问题，当一个进程写 file 时，只写到一半有另外的进程去 require 此文件，</p>
+<p>这时就会因为文件不完整，导致 PHP 语法错误。所以涉及到同时读写同一个文件或数据时一定要加锁，否则在高并发的情况下会产生严重错误。</p>
+<p>最近有个项目需要用 file_put_contents 函数写 txt 文件，由于需要频繁操作，所以经常出现前半截内容缺失的情况，非常苦恼。</p>
+<p>后来查询资料发现，file_put_contents 函数有个参数 LOCK_EX 非常有用，加上它之后，再也没有出现过内容缺失的情况了。</p>
+<p>这个参数 LOCK_EX 的意思很直白，就是写文件时，先锁上这个文件，这样只允许某个客户端访问的时候写，其他客户端访问不能写了。</p>
+<p><strong>我的用法如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| &#96;file_put_contents($file, $content, FILE_APPEND|LOCK_EX)&#96;</span><br></pre></td></tr></table></figure>
+<p><strong>解释：</strong><br>$file=&gt; 这个是写入文件的路径 + 文件名<br>$content=&gt; 这个是写入文件的内容<br>FILE_APPEND=&gt; 直接在该文件已有的内容后面追加内容<br>LOCK_EX=&gt; 写文件的时候先锁定，防止多人同时写入造成内容丢失<br>|</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -490,32 +487,99 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/file_put_contents/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/more_php_fpm/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:29:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-etag" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/more_php_fpm/">启动多配置php-fpm</a>
+      <a class="article-title" href="/2020/04/20/etag/">Etag缓存在PHP</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2020/04/20/etag/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:30:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>HTTP 提供了许多页面缓存的方案，其中属 Etag 和 Last-Modified 应用最广。本文会先介绍 Etag 的应用场景，然后说说他在 PHP 和 node 中的使用。</p>
+<h3 id="一、Etag-的使用"><a href="#一、Etag-的使用" class="headerlink" title="一、Etag 的使用"></a>一、Etag 的使用</h3><p>客户端和浏览器之间的交互：</p>
+<pre class="brush:csharp;gutter:true;" style="color: rgb(0, 0, 0); font-family: "Courier New"; font-size: 12px; margin: 5px 8px; padding: 5px;">+---------+       1         +---------+
+|         |---------------->|         |
+|         |   2（200，OK）   |         |
+|         |<----------------|         |
+|    客   |    3（Etag）     |    服   |
+|         |---------------->|         |
+|    户   |    4（304）      |    务   |
+|         |<----------------|         |
+|    端   |    3（强制刷新）  |    端   |
+|         |---------------->|         |
+|         |   6（200，OK）   |         |
+|         |<----------------|         |
++---------+                 +---------+
+                <Created By Barret Lee>
+</pre>
+
+<ol>
+<li>客户端向服务器请求资源 S</li>
+<li>服务器返回数据，并带上一个 Etag</li>
+<li>客户端再次请求资源 S，由于上次服务器给他返回了一个 Etag，这次请求的时候他会带上这个 Etag</li>
+<li>服务器发现请求中包含 Etag，判断是否过期，没过期则返回 304 Not Modified</li>
+<li>客户端强制刷新（如 Chrome 中 ctrl+shift+R 刷新页面），请求中剔除 Etag</li>
+<li>服务器未发现请求中包含 Etag，返回资源 S，并带上一个 Etag</li>
+</ol>
+<h3 id="二、代码实现"><a href="#二、代码实现" class="headerlink" title="二、代码实现"></a>二、代码实现</h3><p>第一次请求数据：<br><img src="/img/blog/1.jpg" alt=""><br>浏览器在接受到服务器发过来的 Etag 后，会保存下来，下次请求的时候会将它放在请求头中，其 key 值为 If-None-Match。<br><img src="/img/blog/2.jpg" alt=""><br>服务器拿到 If-None-Match 之后，对比之前的 Etag，如果没变，则返回 304 Not Modified.</p>
+<h4 id="1-PHP-中的-Etag"><a href="#1-PHP-中的-Etag" class="headerlink" title="1. PHP 中的 Etag"></a>1. PHP 中的 Etag</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $str &#x3D; &quot;Barret Lee&quot;;</span><br><span class="line">    $Etag &#x3D; md5($str);</span><br><span class="line"></span><br><span class="line">    if(array_key_exists(&#39;HTTP_IF_NONE_MATCH&#39;, $_SERVER) and $_SERVER[&#39;HTTP_IF_NONE_MATCH&#39;] &#x3D;&#x3D; $Etag)&#123;</span><br><span class="line">        header(&quot;HTTP&#x2F;1.1 304 Not Modified&quot;);</span><br><span class="line">        exit();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        header(&quot;Etag:&quot; . $Etag);</span><br><span class="line">        echo $str;</span><br><span class="line">    &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h3><p>Etag 在缓存处理中用的比较广泛，使用它可以减少一些不必要请求的带宽的占用。服务器输出的内容不变，浏览器就应该使用缓存，没必要每次都向服务器端索要数据，造成不必要的浪费。</p>
+<p>从上面我们可以看到，如果想拿到 Etag，就必须先拿到要输出的数据，所以 Etag 只能减少带宽的占用，并不能降低服务器的消耗。如果是静态页面，可以判断文件最近一次的修改时间（Last-Modified），获取文件上次修改时间的消耗比拿到整个数据的消耗要小的多。所以很多时候 Etag 都是配合这 Last-Modified 一起使用的。</p>
+<p>上面的 PHP 和 node 代码演示，很明显的差异就是，node 更加细致，或者说他更加底层，我们可以获取的几乎都是未加修饰的原始数据，从数据量的交互和可操控性来看，我更偏向于 node 的使用。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -528,32 +592,115 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/etag/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/20/php_mianshi02/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-catch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/20/php_mianshi02/">php--面试大全2</a>
+      <a class="article-title" href="/2020/04/20/catch/">php异常、错误处理机制</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2020/04/20/catch/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:29:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。</p>
+<p><strong>PHP 中 try{}catch{}语句概述</strong></p>
+<p>PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取）</p>
+<p>需要进行异常处理的代码都必须放入 try 代码块内，以便捕获可能存在的异常。</p>
+<p>每一个 try 至少要有一个与之对应的 catch。</p>
+<p>使用多个 catch 可以捕获不同的类所产生的异常。</p>
+<p>当 try 代码块不再抛出异常或者找不到 catch 能匹配所抛出的异常时，PHP 代码就会在跳转到最后一个 catch 的后面继续执行。</p>
+<p>当然，PHP 允许在 catch 代码块内再次抛出（throw）异常。</p>
+<p>当一个异常被抛出时，其后（译者注：指抛出异常时所在的代码块）的代码将不会继续执行，而 PHP 就会尝试查找第一个能与之匹配的 catch。</p>
+<p>如果一个异常没有被捕获，而且又没用使用 set_exception_handler() 作相应的处理的话，那么 PHP 将会产生一个严重的错误，并且输出 Uncaught Exception … （未捕获异常）的提示信息。</p>
+<p>先来看一下 PHP 内置异常类的基本属性和方法。（不包括具体实现）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line"></span><br><span class="line">&#125;catch()&#123;</span><br><span class="line"></span><br><span class="line">throw new Exception();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">catch()&#123;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;这里可以捕获到前面一个块抛出的Exception&#96;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>如果抛出了一个异常，try 语句中的脚本将会停止执行，然后马上转向执行 catch 语句中的脚本。</strong></p>
+<p>例子如下：</p>
+<p>包含文件错误抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F; 错误的演示</span><br><span class="line">try &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&#39;file is not exists&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&quot;test_try_catch.php&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&quot;file is not exists&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p> 2、通过 set_exception_handler 函数设置异常处理函数，在这种情况下，即使没有 try{}catch{}，throw 抛出的异常也能由 set_exception_handler 设置的函数自动捕捉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_exception_handler(&#39;exceptionHandler&#39;);  </span><br><span class="line">    throw new Exception(&quot;kkkkkkkkkkkkkkkk&quot;);  </span><br><span class="line">    function exceptionHandler(Exception $exception)&#123;  </span><br><span class="line">          </span><br><span class="line">        echo $exception-&gt;getMessage();  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在 PHP 开发的时候常常会用到 error_reporting(report_level)来调试自己的程序，下面列出了 report_level 可能值：</p>
+<p>| 值 | 常量 | 描述 |<br>| 1 | E_ERROR | 这是一个严重错误，不可恢复，如位置异常，内存不足等 |<br>| 2 | E_WARNING | 警告，最一般的错误，如函数的参数错误等 |<br>| 4 | E_PARSE | 解析错误，在解析 PHP 文件时产生，并强制 PHP 在执行前退出 |<br>| 8 | E_NOTICE | 通告表示可能在操作一些未知的变量等。在开发时可开启通告，以保证程序是”安全通告”的，瑞在正式系统中，应关闭通告 |<br>| 16 | E_CORE_ERROR | 这个内部错误是由于 PHP 加载扩展失败而导致的，并且会导致 PHP 停止运行并退出 |<br>| 32 | E_CORE_WARNING | PHP 启动时初始化过程中的警告(非致命性错) |<br>| 64 | E_COMPILE_ERROR | 编译错误是在编译时发生，这个错误将导致 PHP 运行退出 |<br>| 128 | E_COMPILE_WARNING | 编译警告用于告诉用户一些不推荐的语法信息 |<br>| 256 | E_USER_ERROR | 用户定义的错误将导致辞 PHP 退出，它对是来自 PHP 自身，而是来自脚本文件中。 |<br>| 512 | E_USER_WARNING | 脚本使用它来通知一个执行失败，同时 PHP 也会用 E_WARNING 通知 |<br>| 1024 | E_USER_NOTICE | 用户定义的通告用于在脚本中表示可能存在的错误 |<br>| 2048 | E_STRICT | 编码标准化警告(建议如何修改以向前兼容) |<br>| 4096 | E_RECOVERABLE_ERROR | 接近致命的运行时错误，若未被捕获则视同 E_ERROR |<br>| 8191 | E_ALL | 除 E_STRICT 外的所有错误(PHP6 中为 8191,即包含所有) |</p>
+<p>例子：</p>
+<p>任意数目的以上选项都可以用“或”来连接（用 OR 或 |），这样可以报告所有需要的各级别错误。例如，下面的代码关闭了用户自定义的错误和警告，执行了某些操作，然后恢复到原始的报错级别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F;禁用错误报告</span><br><span class="line">error_reporting(0);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告运行时错误</span><br><span class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);  </span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告所有错误</span><br><span class="line">error_reporting(E_ALL);  </span><br><span class="line"> </span><br><span class="line">error_reporting(7);</span><br><span class="line">&#x2F;*</span><br><span class="line">设置php错误检测级别</span><br><span class="line">E_ERROR - 致命性运行时错 (1)</span><br><span class="line">E_WARNING - 运行时警告（非致命性错）(2)</span><br><span class="line">E_PARSE - 编译时解析错误 (4)</span><br><span class="line">1+2+4 &#x3D; 7</span><br><span class="line">*&#x2F;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>如果设置了 error_reporting(E_NOTICE)，那么程序只会输出 E_NOTICE 等级的信息，一般我们使用的时候只需要设置 error_reporting(E_ALL&amp;!E_WARNING)就行了</p>
+<p>上面我们看到有一种错误叫用户自定义的错误消息，这是什么呢？我们先看一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">    trigger_error(&quot;aaaaaaassssssssssss&quot;,E_USER_ERROR);  </span><br><span class="line">    function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">    if($errno&#x3D;&#x3D;E_USER_ERROR)&#123;  </span><br><span class="line">   	echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innnnnnnni:aaaaaaassssssssssss</span><br></pre></td></tr></table></figure>
+
+
+
+<p>trigger_error()就是用来抛出用户自定义错误消息的函数，通过这个我们能抛出自定义的一些消息被当作错误来处理，比如严重的逻辑问题</p>
+<p>上面的程序我们看到，当程序出错时，除了让 PHP 默认输出出错信息外，我们还能设置自己的错误处理函数，设置的方法就是set_error_handler(),下面来看个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">   echo &quot;dddddddddddd&lt;&#x2F;br&gt;&quot;;  </span><br><span class="line">   echo $cc;&#x2F;&#x2F;$cc没有定义，echo会出错  </span><br><span class="line">   function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">       if($errno&#x3D;&#x3D;E_NOTICE)&#123;  </span><br><span class="line">           echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">       &#125;  </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dddddddddddd</span><br><span class="line">innnnnnnni:Undefined variable: cc</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -566,19 +713,516 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/catch/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
+    <article id="post-iconv" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
-    </div></section>
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/iconv/">iconv的使用方法(转换编码,截取字符串,统计长度)</a>
+    </h1>
   
 
+        
+        <a href="/2020/04/20/iconv/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:27:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.php 中 try catch 可以帮助我们捕获程序代码的异常了，这样我们可以很好的处理一些不必要的错误了，感兴趣的朋友可以一起来看看。</p>
+<p><strong>PHP 中 try{}catch{}语句概述</strong></p>
+<p>PHP5 添加了类似于其它语言的异常处理模块。在 PHP 代码中所产生的异常可被 throw 语句抛出并被 catch 语句捕获。（注：一定要先抛才能获取）</p>
+<p>需要进行异常处理的代码都必须放入 try 代码块内，以便捕获可能存在的异常。</p>
+<p>每一个 try 至少要有一个与之对应的 catch。</p>
+<p>使用多个 catch 可以捕获不同的类所产生的异常。</p>
+<p>当 try 代码块不再抛出异常或者找不到 catch 能匹配所抛出的异常时，PHP 代码就会在跳转到最后一个 catch 的后面继续执行。</p>
+<p>当然，PHP 允许在 catch 代码块内再次抛出（throw）异常。</p>
+<p>当一个异常被抛出时，其后（译者注：指抛出异常时所在的代码块）的代码将不会继续执行，而 PHP 就会尝试查找第一个能与之匹配的 catch。</p>
+<p>如果一个异常没有被捕获，而且又没用使用 set_exception_handler() 作相应的处理的话，那么 PHP 将会产生一个严重的错误，并且输出 Uncaught Exception … （未捕获异常）的提示信息。</p>
+<p>先来看一下 PHP 内置异常类的基本属性和方法。（不包括具体实现）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line"></span><br><span class="line">&#125;catch()&#123;</span><br><span class="line"></span><br><span class="line">throw new Exception();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">catch()&#123;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;这里可以捕获到前面一个块抛出的Exception&#96;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>如果抛出了一个异常，try 语句中的脚本将会停止执行，然后马上转向执行 catch 语句中的脚本。</strong></p>
+<p>例子如下：</p>
+<p>包含文件错误抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F; 错误的演示</span><br><span class="line">try &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&#39;test_try_catch.php&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&#39;file is not exists&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 正确的抛出异常</span><br><span class="line">try &#123;</span><br><span class="line">if (file_exists(&#39;test_try_catch.php&#39;)) &#123;</span><br><span class="line">require (&quot;test_try_catch.php&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">throw new Exception(&quot;file is not exists&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p> 2、通过 set_exception_handler 函数设置异常处理函数，在这种情况下，即使没有 try{}catch{}，throw 抛出的异常也能由 set_exception_handler 设置的函数自动捕捉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_exception_handler(&#39;exceptionHandler&#39;);  </span><br><span class="line">    throw new Exception(&quot;kkkkkkkkkkkkkkkk&quot;);  </span><br><span class="line">    function exceptionHandler(Exception $exception)&#123;  </span><br><span class="line">          </span><br><span class="line">        echo $exception-&gt;getMessage();  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在 PHP 开发的时候常常会用到 error_reporting(report_level)来调试自己的程序，下面列出了 report_level 可能值：</p>
+<p>| 值 | 常量 | 描述 |<br>| 1 | E_ERROR | 这是一个严重错误，不可恢复，如位置异常，内存不足等 |<br>| 2 | E_WARNING | 警告，最一般的错误，如函数的参数错误等 |<br>| 4 | E_PARSE | 解析错误，在解析 PHP 文件时产生，并强制 PHP 在执行前退出 |<br>| 8 | E_NOTICE | 通告表示可能在操作一些未知的变量等。在开发时可开启通告，以保证程序是”安全通告”的，瑞在正式系统中，应关闭通告 |<br>| 16 | E_CORE_ERROR | 这个内部错误是由于 PHP 加载扩展失败而导致的，并且会导致 PHP 停止运行并退出 |<br>| 32 | E_CORE_WARNING | PHP 启动时初始化过程中的警告(非致命性错) |<br>| 64 | E_COMPILE_ERROR | 编译错误是在编译时发生，这个错误将导致 PHP 运行退出 |<br>| 128 | E_COMPILE_WARNING | 编译警告用于告诉用户一些不推荐的语法信息 |<br>| 256 | E_USER_ERROR | 用户定义的错误将导致辞 PHP 退出，它对是来自 PHP 自身，而是来自脚本文件中。 |<br>| 512 | E_USER_WARNING | 脚本使用它来通知一个执行失败，同时 PHP 也会用 E_WARNING 通知 |<br>| 1024 | E_USER_NOTICE | 用户定义的通告用于在脚本中表示可能存在的错误 |<br>| 2048 | E_STRICT | 编码标准化警告(建议如何修改以向前兼容) |<br>| 4096 | E_RECOVERABLE_ERROR | 接近致命的运行时错误，若未被捕获则视同 E_ERROR |<br>| 8191 | E_ALL | 除 E_STRICT 外的所有错误(PHP6 中为 8191,即包含所有) |</p>
+<p>例子：</p>
+<p>任意数目的以上选项都可以用“或”来连接（用 OR 或 |），这样可以报告所有需要的各级别错误。例如，下面的代码关闭了用户自定义的错误和警告，执行了某些操作，然后恢复到原始的报错级别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F;禁用错误报告</span><br><span class="line">error_reporting(0);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告运行时错误</span><br><span class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE);  </span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;报告所有错误</span><br><span class="line">error_reporting(E_ALL);  </span><br><span class="line"> </span><br><span class="line">error_reporting(7);</span><br><span class="line">&#x2F;*</span><br><span class="line">设置php错误检测级别</span><br><span class="line">E_ERROR - 致命性运行时错 (1)</span><br><span class="line">E_WARNING - 运行时警告（非致命性错）(2)</span><br><span class="line">E_PARSE - 编译时解析错误 (4)</span><br><span class="line">1+2+4 &#x3D; 7</span><br><span class="line">*&#x2F;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>如果设置了 error_reporting(E_NOTICE)，那么程序只会输出 E_NOTICE 等级的信息，一般我们使用的时候只需要设置 error_reporting(E_ALL&amp;!E_WARNING)就行了</p>
+<p>上面我们看到有一种错误叫用户自定义的错误消息，这是什么呢？我们先看一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">    trigger_error(&quot;aaaaaaassssssssssss&quot;,E_USER_ERROR);  </span><br><span class="line">    function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">    if($errno&#x3D;&#x3D;E_USER_ERROR)&#123;  </span><br><span class="line">   	echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innnnnnnni:aaaaaaassssssssssss</span><br></pre></td></tr></table></figure>
+
+
+
+<p>trigger_error()就是用来抛出用户自定义错误消息的函数，通过这个我们能抛出自定义的一些消息被当作错误来处理，比如严重的逻辑问题</p>
+<p>上面的程序我们看到，当程序出错时，除了让 PHP 默认输出出错信息外，我们还能设置自己的错误处理函数，设置的方法就是set_error_handler(),下面来看个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set_error_handler(&#39;errorHandler&#39;);  </span><br><span class="line">   echo &quot;dddddddddddd&lt;&#x2F;br&gt;&quot;;  </span><br><span class="line">   echo $cc;&#x2F;&#x2F;$cc没有定义，echo会出错  </span><br><span class="line">   function errorHandler($errno,$errstr)&#123;  </span><br><span class="line">       if($errno&#x3D;&#x3D;E_NOTICE)&#123;  </span><br><span class="line">           echo &quot;innnnnnnni:&quot;,$errstr;  </span><br><span class="line">       &#125;  </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p> 输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dddddddddddd</span><br><span class="line">innnnnnnni:Undefined variable: cc</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/iconv/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-baidu" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/baidu/">百度语音接口简单使用</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/baidu/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:23:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-type:text&#x2F;html;charset&#x3D;utf-8&quot;);</span><br><span class="line">define(&#39;AUDIO_FILE&#39;, &quot;.&#x2F;test2.pcm&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;put your params here</span><br><span class="line">$cuid &#x3D; &quot;&quot;;</span><br><span class="line">$apiKey &#x3D; &quot;&quot;;</span><br><span class="line">$secretKey &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">$auth_url &#x3D; &quot;https:&#x2F;&#x2F;openapi.baidu.com&#x2F;oauth&#x2F;2.0&#x2F;token?grant_type&#x3D;client_credentials&amp;client_id&#x3D;&quot;.$apiKey.&quot;&amp;client_secret&#x3D;&quot;.$secretKey;</span><br><span class="line">$ch &#x3D; curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $auth_url);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);</span><br><span class="line"> curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);</span><br><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);</span><br><span class="line">$response &#x3D; curl_exec($ch);</span><br><span class="line">if(curl_errno($ch))</span><br><span class="line">&#123;</span><br><span class="line">    print curl_error($ch);</span><br><span class="line">&#125;</span><br><span class="line">curl_close($ch);</span><br><span class="line">$response &#x3D; json_decode($response, true);</span><br><span class="line">$token &#x3D; $response[&#39;access_token&#39;];</span><br><span class="line"></span><br><span class="line">$url &#x3D; &quot;http:&#x2F;&#x2F;vop.baidu.com&#x2F;server_api?cuid&#x3D;&quot;.$cuid.&quot;&amp;token&#x3D;&quot;.$token;</span><br><span class="line">&#x2F;&#x2F;$url &#x3D; $url.&quot;&amp;lan&#x3D;zh&quot;;</span><br><span class="line">$audio &#x3D; file_get_contents(AUDIO_FILE);</span><br><span class="line">$content_len &#x3D; &quot;Content-Length: &quot;.strlen($audio);</span><br><span class="line">$header &#x3D; array ($content_len,&#39;Content-Type: audio&#x2F;pcm; rate&#x3D;8000&#39;,);</span><br><span class="line">$ch &#x3D; curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_HTTPHEADER, $header);</span><br><span class="line">curl_setopt($ch, CURLOPT_POST, 1);</span><br><span class="line">curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);</span><br><span class="line">curl_setopt($ch, CURLOPT_TIMEOUT, 30);</span><br><span class="line">curl_setopt($ch, CURLOPT_POSTFIELDS, $audio);</span><br><span class="line">$response &#x3D; curl_exec($ch);</span><br><span class="line">if(curl_errno($ch))</span><br><span class="line">&#123;</span><br><span class="line">    print curl_error($ch);</span><br><span class="line">&#125;</span><br><span class="line">curl_close($ch);</span><br><span class="line">echo $response;</span><br><span class="line">$response &#x3D; json_decode($response, true);</span><br><span class="line">&#x2F;&#x2F;var_dump($response);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试的时候官方会提示一个 3300 的错误 是证书验证不通过 特在此记录一下</p>
+<p>在第一个 curl 里面加上下面语句就 ok 了 有兴趣的可以试一下吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#96;curl_setopt(&#96;&#96;$ch&#96;&#96;, CURLOPT_SSL_VERIFYPEER, FALSE);&#96;</span><br><span class="line"></span><br><span class="line">&#96;curl_setopt(&#96;&#96;$ch&#96;&#96;, CURLOPT_SSL_VERIFYHOST, FALSE);&#96;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/baidu/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/session/">session和cookie的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/session/" class="archive-article-date">
+  	<time datetime="2020-04-20T10:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>——————————————<strong>session 的使用</strong>————————————–</p>
+<p>session 中同一浏览器同一站点只能有一个 session_id,下面我们一起来看看关于 session 使用方法。<br>如何使用 session，凡是与 session 有关的，之前必须调用函数 session_start();<br>为 session 赋值很简单，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">Session_start();</span><br><span class="line">$Name &#x3D; &quot;这是一个Session例子&quot;;</span><br><span class="line">Session_Register(&quot;Name&quot;);&#x2F;&#x2F;注意,不要写成：Session_Register(&quot;$Name&quot;);</span><br><span class="line">echo $_SESSION[&quot;Name&quot;];</span><br><span class="line">&#x2F;&#x2F;输出$_SESSION[&quot;Name&quot;]为&quot;这是一个Session例子&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>取消 session 可以这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">session_unset();</span><br><span class="line">session_destroy();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>读取 session</p>
+<p>PHP 内置的 $_SESSION 变量可以很方便的访问设置的 session 变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">echo &quot;登记的用户名为：&quot;.$_SESSION[&quot;username&quot;];    &#x2F;&#x2F;输出 登记的用户名为：nostop</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>检查变量是否被登记为会话变量 session_is_registered<br>语法：boobean session_is_registered(string name);<br>这个函数可检查当前的 session 之中是否已有指定的变量注册，参数 name 就是要检查的变量名。成功则返回逻辑值 true。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    session_start();</span><br><span class="line">    if(!session_is_registered(&quot;gender&quot;))&#123; &#x2F;&#x2F;判断当前会话变量是否注册</span><br><span class="line">        session_register(&quot;gender&quot;);    &#x2F;&#x2F;注册变量</span><br><span class="line">    &#125;</span><br><span class="line">    $gender&#x3D;&quot;女&quot;;</span><br></pre></td></tr></table></figure>
+<p>?&gt;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话名称  session_name</span><br><span class="line">语法：boolean session_name(string [name]);</span><br><span class="line">这个函数可取得或重新设置当前 session 的名称。若无参数 name 则表示获取当前 session 名称，加上参数则表示将 session 名称设为参数 name。</span><br></pre></td></tr></table></figure>
+<?php
+$sessionName = session_name();   //取得当前 Session 名，默认为 PHPSESSID
+$sessionID = $_GET[$sessionName];   //取得 Session ID
+session_id($sessionID);      //使用 session_id() 设置获得的 Session ID
+?>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话标识号 session_id</span><br><span class="line">语法：boolean session_id(string [id]);</span><br><span class="line">这个函数可取得或重新设置当前存放 session 的标识号。若无参数 id 则表示只获取当前 session 的标识号，加上参数则表示将 session 的标识号设成新指定的 id。</span><br><span class="line">设置 Session 的生存期</span><br></pre></td></tr></table></figure>
+<?php
+    session_start
+    // 保存一天
+    $lifeTime = 24 * 3600;
+    setcookie(session_name(), session_id(), time() + $lifeTime, "/");
+?>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">session_set_cookie_params:设置 Session 的生存期的，该函数必须在 session_start() 函数调用之前调用。</span><br><span class="line">如果客户端使用 IE 6.0 ， session_set_cookie_params(); 函数设置 Cookie 会有些问题，所以我们还是手动调用 setcookie 函数来创建 cookie。</span><br></pre></td></tr></table></figure>
+<?php
+// 保存一天
+　　$lifeTime = 24 * 3600;
+　　session_set_cookie_params($lifeTime);
+　　session_start();
+　　$_session["admin"] = true;
+?>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">设置 Session 文件的保存路径</span><br><span class="line">session_save_path() ：必须在 session_start() 函数调用之前调用</span><br></pre></td></tr></table></figure>
+<?php
+　　// 设置一个存放目录
+　　$savePath = "./session_save_dir/";
+　　// 保存一天
+　　$lifeTime = 24 * 3600;
+　　session_save_path($savePath);
+　　session_set_cookie_params($lifeTime);
+　　session_start();
+　　$_session["admin"] = true;
+?>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<?php
+session_start();    //启动Session
+$username='nostop';
+session_register('username');    //注册一个名为username变量
+echo '登记的用户：'.$_SESSION['username'];    //登记的用户：nostop   读取Session变量
+
+$_SESSION['age']=23;    //声明一个名为age的变量，并赋值
+echo '年龄：'.$_SESSION['age']; //年龄：23
+
+session_unregister('username'); //注销Session变量
+echo $_SESSION['username'];  //空
+echo $_SESSION['age'];//23
+
+unset($_SESSION['age']); //注销Session变量
+echo '登记的用户：'.$_SESSION['username']; //空
+echo '年龄：'.$_SESSION['age']; //空
+?>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意：1:在调用 Session_Start()之前不能有任何输出。例如下面是错误的。</span><br></pre></td></tr></table></figure>
+<?PHP
+ Session_Start();//之前在第一行已经有输出
+ .....
+?>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">提示 1:</span><br><span class="line"></span><br><span class="line">凡是出现&quot;........headers already sent..........&quot;,就是 Session_Start()之前向浏览器输出信息。</span><br><span class="line">去掉输出就正常，（COOKIE 也会出现这种错误，错误原因一样）</span><br><span class="line"></span><br><span class="line">提示 2:</span><br><span class="line"></span><br><span class="line">如果你的 Session_Start()放在循环语句里，并且很难确定之前哪里向浏览器输出信息，可以用下面这种方法：</span><br><span class="line">1 行 &lt;?PHP Ob_Start(); ?&gt;</span><br><span class="line">........这里是你的程序......</span><br><span class="line"></span><br><span class="line">2:这是什么错误</span><br><span class="line"></span><br><span class="line">Warning: session_start(): open(&#x2F;tmpsess_7d190aa36b4c5ec13a5c1649cc2da23f, O_RDWR) failed:....</span><br><span class="line">因为你没有指定 session 文件的存放路径。</span><br><span class="line"></span><br><span class="line">解决方法：</span><br><span class="line"></span><br><span class="line">(1)在 c 盘建立文件夹 tmp</span><br><span class="line">(2)打开 php.ini,找到 session.save_path,修改为 session.save_path&#x3D; &quot;c:&#x2F;tmp&quot;</span><br><span class="line"></span><br><span class="line">------------------------------------------**PHP cookie 的使用以及坑**--------------------------------------</span><br><span class="line"></span><br><span class="line">1.设置 cookie</span><br></pre></td></tr></table></figure>
+<p>setcookie(‘uid’, 3, time()+3600, ‘/‘, $_SERVER[‘HTTP_HOST’]);  // cookie 名字 cookie 值  过期时间  path 保存目录 作用域</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.设置 cookie 的过期</span><br></pre></td></tr></table></figure>
+<p>setcookie(‘uid’, 0, 0, ‘/‘, $_SERVER[‘HTTP_HOST’]);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.cookie 的坑 url 区分大小写</span><br><span class="line"></span><br><span class="line">如果不加第四个参数  可能会在 url 大小写下出现获取不到 cookie 所以一定要加上域名的作用域</span><br><span class="line"></span><br><span class="line">4.语法</span><br></pre></td></tr></table></figure>
+<ol>
+<li>setcookie(name,value,expire,path,domain,secure)<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>必需。规定 cookie 的名称。</td>
+</tr>
+<tr>
+<td>value</td>
+<td>必需。规定 cookie 的值。</td>
+</tr>
+<tr>
+<td>expire</td>
+<td>可选。规定 cookie 的有效期。</td>
+</tr>
+<tr>
+<td>path</td>
+<td>可选。规定 cookie 的服务器路径。</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>可选。规定 cookie 的域名。</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>可选。规定是否通过安全的 HTTPS 连接来传输 cookie。</td>
+</tr>
+<tr>
+<td>```</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/session/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/hexo/">hexo 使用教程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/hexo/" class="archive-article-date">
+  	<time datetime="2020-04-20T07:16:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h3><p>获得个人网站域名<br>GitHub创建个人仓库<br>安装Git<br>安装Node.js<br>安装Hexo<br>推送网站<br>绑定域名<br>更换主题<br>初识MarkDown语法<br>发布文章<br>寻找图床<br>个性化设置<br>其他<br>附录</p>
+<h2 id="1-首先安装-node和npm-git-这些软件-以及注册github"><a href="#1-首先安装-node和npm-git-这些软件-以及注册github" class="headerlink" title="1.首先安装 node和npm git 这些软件 以及注册github"></a>1.首先安装 node和npm git 这些软件 以及注册github</h2><h2 id="2-安装hexo"><a href="#2-安装hexo" class="headerlink" title="2.安装hexo"></a>2.安装hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-cli -g  安装Hexo</span><br><span class="line">hexo init blog   建立一个项目</span><br></pre></td></tr></table></figure>
+<h2 id="3-连接Github与本地"><a href="#3-连接Github与本地" class="headerlink" title="3.连接Github与本地"></a>3.连接Github与本地</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;godweiyang&quot;</span><br><span class="line">git config --global user.email &quot;792321264@qq.com&quot;</span><br><span class="line">用户名和邮箱根据你注册github的信息自行修改。</span><br><span class="line">然后生成密钥SSH key：</span><br><span class="line">ssh-keygen -t rsa -C &quot;792321264@qq.com&quot;</span><br><span class="line">打开github，在头像下面点击settings，再点击SSH and GPG keys，新建一个SSH，名字随便。</span><br><span class="line">cat ~&#x2F;.ssh&#x2F;id_rsa.pub</span><br><span class="line">将输出的内容复制到框中，点击确定保存。</span><br><span class="line">在终端输入ssh -T git@github.com，如果如下图所示，出现你的用户名，那就成功了</span><br><span class="line">打开博客根目录下的_config.yml文件，这是博客的配置文件，在这里你可以修改与博客相关的各种信息。</span><br><span class="line"></span><br><span class="line">修改最后一行的配置：</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https:&#x2F;&#x2F;github.com&#x2F;godweiyang&#x2F;godweiyang.github.io</span><br><span class="line">  branch: master</span><br><span class="line">repository修改为你自己的github项目地址。</span><br></pre></td></tr></table></figure>
+<h2 id="4-hexo命令"><a href="#4-hexo命令" class="headerlink" title="4.hexo命令"></a>4.hexo命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;article title&quot;，新建一篇文章。</span><br><span class="line">hexo generate 生成静态文件</span><br><span class="line">hexo server  运行hexo服务器</span><br><span class="line">hexo deploy  将Hexo上传到Github</span><br></pre></td></tr></table></figure>
+<h2 id="5-建立标签分类"><a href="#5-建立标签分类" class="headerlink" title="5.建立标签分类"></a>5.建立标签分类</h2><p>生成”分类”<br>hexo new page categories，来新建一个页面，并命名为categories。成功后会提示：INFO Created: ~/hexo/source/categories/index.md<br>根据上面的路径找到index.md这个文件，打开后默认内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br></pre></td></tr></table></figure>
+<p>编辑新创建的页面，添加type: “categories”到内容中(注意，这些属性和属性值之间必须有一个空格)，主题将自动为这个页面显示所有分类，添加后是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure>
+<p>保存并关闭文件。</p>
+<p>给文章添加”categories”属性<br>打开需要添加分类的文章，为其添加categories属性。下方的categories: Python表示添加这篇文章到“Python”这个分类中。</p>
+<p>注意：Hexo中一篇文章只能属于一个分类，也就是说如果在”Python”下方添加”-xxx”，Hexo不会产生两个分类，而是把分类嵌套，即该文章属于”Python“下的”-xxx“分类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: Python中*args和**kwargs的用法总结</span><br><span class="line">categories: Python</span><br></pre></td></tr></table></figure>
+<p>回到hexo文件夹下，依次执行hexo g，hexo server和hexo deploy命令(重新部署)。</p>
+<p>在Hexo菜单上添加分类选项</p>
+<p>menu:<br>  Python: /Python<br>##6.遇到问题<br>hexo d命令报错 ERROR Deployer not found: git</p>
+<p>解决方案<br>这是因为没安装hexo-deployer-git插件，在站点目录下输入下面的插件安装就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/oneself//" class="article-tag-list-link color3">oneself</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/hexo/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
     </nav>
   
 
@@ -602,9 +1246,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
