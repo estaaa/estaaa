@@ -183,6 +183,204 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-more_php_fpm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/more_php_fpm/">启动多配置php-fpm</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/more_php_fpm/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:29:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一。使用 tcp 方式进行配置</strong></p>
+<p>1.首先配置 php-fpm.conf 文件 /usr/local/php/etc/php-fpm.conf</p>
+<p>2.复制多个 php-fpm.conf 文件 为 php-fpm2.conf php-fpm3.conf php-fpm4.conf</p>
+<p>3.对每个配置文件进行配置不同端口 不同 pid 不同日志文件</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line"></span><br><span class="line">pid &#x3D; &#x2F;usr&#x2F;local&#x2F;php&#x2F;var&#x2F;run&#x2F;php-fpm4.pid</span><br><span class="line"></span><br><span class="line">error_log &#x3D; &#x2F;usr&#x2F;local&#x2F;php&#x2F;var&#x2F;log&#x2F;php-fpm4.log</span><br><span class="line"></span><br><span class="line">log_level &#x3D; notice</span><br><span class="line"></span><br><span class="line">[www]</span><br><span class="line"></span><br><span class="line">#listen &#x3D; &#x2F;tmp&#x2F;php-cgi.sock</span><br><span class="line"></span><br><span class="line">listen &#x3D; 127.0.0.1:10004   不同文件配置不同端口</span><br></pre></td></tr></table></figure>
+<p>4.启动多个 php.conf 主进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin&#x2F;php-fpm -y &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm.conf</span><br><span class="line"></span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin&#x2F;php-fpm -y &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm1.conf</span><br><span class="line"></span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin&#x2F;php-fpm -y &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm2.conf</span><br><span class="line"></span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin&#x2F;php-fpm -y &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm3.conf</span><br></pre></td></tr></table></figure>
+<p>5.对 nginx 进行配置  可以进行反向代理  也可以进行固定项目固定对应不同的 php-fpm 端口</p>
+<p>固定配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">location ~ \.php(.*)$  &#123;</span><br><span class="line"></span><br><span class="line">           # fastcgi_pass   unix:&#x2F;tmp&#x2F;php-cgi.sock;</span><br><span class="line"></span><br><span class="line">            fastcgi_pass    127.0.0.1:9000; &#x2F;&#x2F;固定配置</span><br><span class="line"></span><br><span class="line">	    fastcgi_index  index.php;</span><br><span class="line"></span><br><span class="line">            fastcgi_split_path_info  ^((?U).+\.php)(&#x2F;?.+)$;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  PATH_INFO  $fastcgi_path_info;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  PATH_TRANSLATED  $document_root$fastcgi_path_info;</span><br><span class="line"></span><br><span class="line">            include        fastcgi_params;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>反向代理如下</p>
+<p>在 nginx.conf 配置添加需要代理的端口  并在 http 代码里面添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">upstream PHP &#123;</span><br><span class="line"></span><br><span class="line">    server 127.0.0.1:9000;</span><br><span class="line"></span><br><span class="line">    server 127.0.0.1:10002;</span><br><span class="line"></span><br><span class="line">    server 127.0.0.1:10003;</span><br><span class="line"></span><br><span class="line">    server 127.0.0.1:10004;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在配置文件 PHP 更改端口为 PHP 变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">location ~ \.php(.*)$  &#123;</span><br><span class="line"></span><br><span class="line">           # fastcgi_pass   unix:&#x2F;tmp&#x2F;php-cgi.sock;</span><br><span class="line"></span><br><span class="line">            fastcgi_pass    php; &#x2F;&#x2F;随机使用 ip</span><br><span class="line"></span><br><span class="line">	    fastcgi_index  index.php;</span><br><span class="line"></span><br><span class="line">            fastcgi_split_path_info  ^((?U).+\.php)(&#x2F;?.+)$;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  PATH_INFO  $fastcgi_path_info;</span><br><span class="line"></span><br><span class="line">            fastcgi_param  PATH_TRANSLATED  $document_root$fastcgi_path_info;</span><br><span class="line"></span><br><span class="line">            include        fastcgi_params;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.重启某一个主进程</p>
+<p>kill -USR2 9436</p>
+<p>killall php-fpm  杀死所有 php-fpm 进程</p>
+<p><strong>二。使用 socket 进行配置是</strong></p>
+<p>1、第一步：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cp php-fpm.conf php-fpm2.conf</span><br><span class="line"></span><br><span class="line">vi php-fpm2.conf 做相应的修改</span><br><span class="line"></span><br><span class="line">[global]</span><br><span class="line">#修改这里 1&#x2F;2</span><br><span class="line">pid &#x3D; &#x2F;usr&#x2F;local&#x2F;php&#x2F;var&#x2F;run&#x2F;php-fpm2.pid</span><br><span class="line">error_log &#x3D; &#x2F;usr&#x2F;local&#x2F;php&#x2F;var&#x2F;log&#x2F;php-fpm2.log</span><br><span class="line">#end</span><br><span class="line">log_level &#x3D; notice</span><br><span class="line">[www]</span><br><span class="line">#修改这里 2&#x2F;2</span><br><span class="line">listen &#x3D; &#x2F;tmp&#x2F;php-cgi2.sock</span><br><span class="line">#end</span><br><span class="line">#listen &#x3D; 127.0.0.1:9000</span><br><span class="line">listen.backlog &#x3D; 2048</span><br><span class="line">listen.allowed_clients &#x3D; 127.0.0.1</span><br><span class="line">pm &#x3D; static</span><br><span class="line">pm.max_children &#x3D; 200</span><br><span class="line">pm.start_servers &#x3D; 50</span><br><span class="line">pm.min_spare_servers &#x3D; 30</span><br><span class="line">pm.max_spare_servers &#x3D; 250</span><br><span class="line">request_terminate_timeout &#x3D; 0</span><br><span class="line">request_slowlog_timeout &#x3D; 2</span><br><span class="line">slowlog &#x3D; var&#x2F;log&#x2F;slow.log</span><br></pre></td></tr></table></figure>
+<p>2、第二步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cp &#x2F;etc&#x2F;init.d&#x2F;php-fpm &#x2F;etc&#x2F;init.d&#x2F;php-fpm2  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vi  &#x2F;etc&#x2F;init.d&#x2F;php-fpm2 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">修改</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php</span><br><span class="line"></span><br><span class="line">exec_prefix&#x3D;$&#123;prefix&#125;</span><br><span class="line"></span><br><span class="line">php_fpm_BIN&#x3D;$&#123;exec_prefix&#125;&#x2F;sbin&#x2F;php-fpm</span><br><span class="line"></span><br><span class="line">php_fpm_CONF&#x3D;$&#123;prefix&#125;&#x2F;etc&#x2F;php-fpm2.conf</span><br><span class="line"></span><br><span class="line">php_fpm_PID&#x3D;$&#123;prefix&#125;&#x2F;var&#x2F;run&#x2F;php-fpm2.pid</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/more_php_fpm/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-php_mianshi02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/php_mianshi02/">php--面试大全2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/php_mianshi02/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><strong>MySQL 的读写分离？</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">读写分离的实现原理就是在执行 SQL 语句的时候，判断到底是读操作还是写操作，把读的操作转向到读服务器上（从服务器，一般是多台），写的操作转到写的服务器上（主服务器，一般是一台，视数据量来看）。</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>2、说一下单引号双引号？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单引号内部的变量不会执行， 双引号会执行</span><br><span class="line">单引号解析速度比双引号快。</span><br><span class="line">单引号只能解析部分特殊字符，双引号可以解析所有特殊字符。</span><br></pre></td></tr></table></figure>
+<p><strong>3、PHP7 的新特性？重点</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">标量类型声明：PHP 7 中的函数的形参类型声明可以是标量了。在 PHP 5 中只能是类名、接口、array 或者 callable (PHP 5.4，即可以是函数，包括匿名函数)，现在也可以使用 string、int、float 和 bool 了。</span><br><span class="line"></span><br><span class="line">返回值类型声明：增加了对返回类型声明的支持。 类似于参数类型声明，返回类型声明指明了函数返回值的类型。可用的类型与参数声明中可用的类型相同。</span><br><span class="line"></span><br><span class="line">NULL 合并运算符：由于日常使用中存在大量同时使用三元表达式和 isset()的情况，NULL 合并运算符使得变量存在且值不为 NULL， 它就会返回自身的值，否则返回它的第二个操作数。</span><br><span class="line"></span><br><span class="line">use 加强：从同一 namespace 导入的类、函数和常量现在可以通过单个 use 语句 一次性导入了</span><br><span class="line"></span><br><span class="line">匿名类：现在支持通过 new class 来实例化一个匿名类</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、PHP 数组排序</strong></p>
+<p>sort() - 以升序对数组排序</p>
+<p>rsort() - 以降序对数组排序</p>
+<p>asort() - 根据值，以升序对关联数组进行排序</p>
+<p>ksort() - 根据键，以升序对关联数组进行排序</p>
+<p>arsort() - 根据值，以降序对关联数组进行排序</p>
+<p>krsort() - 根据键，以降序对关联数组进行排序</p>
+<p>5.<strong>查看按址传递的引用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$a &#x3D; &#39;abc&#39;;</span><br><span class="line">$b &#x3D; &amp;$a;</span><br><span class="line">unset($a);</span><br><span class="line">echo $b; &#x2F;&#x2F;abc</span><br><span class="line">echo $a; &#x2F;&#x2F;报错</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>消息队列是什么<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">消息队列主要用在系统解耦、流量削峰、异步处理、数据顺序处理等场景，特点先进先出 栈 后进先出</span><br></pre></td></tr></table></figure></li>
+<li>PHP 接口(interface)总结<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">接口是起到规范程序使用的</span><br><span class="line">对事物的抽象是指，区别两个不同事物之间的本质特征，这两个事物应该在某个视角上有明确的区分界限。</span><br></pre></td></tr></table></figure></li>
+<li><strong>MySQL 索引类型</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1、主键索引：主键索引是一种特殊的唯一索引，不允许有空值</span><br><span class="line"></span><br><span class="line">2、普通索引或者单列索引</span><br><span class="line"></span><br><span class="line">3、多列索引（复合索引）：复合索引指多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用。使用复合索引时遵循最左前缀集合 遵循最左原则</span><br><span class="line"></span><br><span class="line">4.唯一索引或者非唯一索引</span><br><span class="line"></span><br><span class="line">5.full text: 表示 全文搜索的索引。 FULLTEXT 用于搜索很长一篇文章的时候，效果最好。用在比较短的文本，如果就一两行字的，普通的 INDEX 也可以。</span><br></pre></td></tr></table></figure></li>
+<li><strong>### MySQL 常用储存引擎</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">1.innoDB 2.MyISAM 3. MEMORY 4. MERGE</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;MyISAM&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">它不支持事务，也不支持外键，其优势是访问的速度快，对事务完整性没有要求的或者以 select&#x2F;insert 为主的应用基本上可以使用这个引擎来创建表。</span><br><span class="line"></span><br><span class="line">每个 MyISAM 在磁盘上都有 3 个文件，其文件名都与表名相同，但扩展名是：</span><br><span class="line"></span><br><span class="line">.frm(表定义) .MYD(MYDate：存储数据) .MYI(MYIndex：存储索引)</span><br><span class="line"></span><br><span class="line">.MYD 文件和。MYI 文件可以放置在不同的目录中，通过 data directory 和 index directory 语句指定。 MyISAM 类型的表可能会损坏，可以使用 CHECK TABLE 语句来检查 MyISAM 表的健康，并用 REPAIR TABLE 语句修复一个损坏到 MyISAM 表。</span><br><span class="line"></span><br><span class="line">MyISAM 支持 3 种不同的存储格式：</span><br><span class="line"></span><br><span class="line">静态（固定长度）表 动态表 压缩表</span><br><span class="line"></span><br><span class="line">在静态表中，如果需要保存的内容后面本来就带有空格，那么在返回结果的时候会去掉公共的。 在动态表中，记录不固定，优点是占用空间相对比较少，缺点是频繁的更新和删除记录会产生碎片，需要定期执行 optimize table 来改善性能。 在压缩表中，由 myisampack 工具创建，占据非常小的磁盘空间。因为每个记录都被单独压缩的。</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;InnoDB&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">InnoDB 支持事务安全，对比 MyISAM 引擎，InnoDB 写的效率差一些，并且会占据更多的磁盘空间。</span><br><span class="line"></span><br><span class="line">InnoDB 自动增长列可以手工插入，但是插入的值是空或者 0，则实际插入的将是自动增长后的值。可以使用 last*insert*id()查询当前线程最后插入记录使用的值。可以通过 alert table *** auto_increment&#x3D;n;语句强制设置自动增长值。</span><br><span class="line"></span><br><span class="line">对于 InnoDB 表，自动增长列必须是索引。如果是组合索引，也必须是组合索引的第一列，但是对于 MyISAM 表，自动增长列可以是组合索引的其他列，这样插入记录后，自动增长列是按照组合索引到前面几列排序后递增的。</span><br><span class="line"></span><br><span class="line">**MySQL 支持外键的存储引擎只有 InnoDB**，在创建外键的时候，父表必须有对应的索引，子表在创建外键的时候也会自动创建对应的索引。在创建索引的时候，可以指定在删除、更新父表时，对子表进行的相应操作，包括 restrict、cascade、set null 和 no action。其中 restrict 和 no action 相同，是指限制在子表有关联的情况下，父表不能更新；casecade 表示父表在更新或删除时，更新或者删除子表对应的记录；set null 则表示父表在更新或者删除的时候，子表对应的字段被 set null。当某个表被其它表创建了外键参照，那么该表对应的索引或主键被禁止删除。可以使用 set foreign*key*checks&#x3D;0;临时关闭外键约束，set foreign*key*checks&#x3D;1;打开约束。 InnoDB 存储表和索引有如下两种方式：</span><br><span class="line"></span><br><span class="line">使用共享表空间存储。 使用多表空间存储。</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;MEMORY&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">memory 使用存在内存中的内容来创建表。每个 MEMORY 表实际对应一个磁盘文件，格式是。frm。MEMORY 类型的表访问非常快，因为它到数据是放在内存中的，并且默认使用 HASH 索引，但是一旦服务器关闭，表中的数据就会丢失，但表还会继续存在。 每个 MEMORY 表中放置到数据量的大小，受到 max*heap*table*size 系统变量的约束，这个系统变量的初始值是 16M，同时在创建 MEMORY 表时可以使用 MAX*ROWS 子句来指定表中的最大行数。 memory 主要用于那些内容变化不频繁的代码表，或作为统计操作的中间结果表。</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;MERGE&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">merge 存储引擎是一组 MyISAM 表的组合，这些 MyISAM 表结构必须完全相同，MERGE 表中并没有数据，对 MERGE 类型的表可以进行查询、更新、删除的操作，这些操作实际上是对内部的 MyISAM 表进行操作。</span><br><span class="line"></span><br><span class="line">对于对 MERGE 表进行的插入操作，是根据 INSERT_METHOD 子句定义的插入的表，可以有 3 个不同的值，first 和 last 值使得插入操作被相应的作用在第一个或最后一个表上，不定义这个子句或者为 NO，表示不能对这个 MERGE 表进行插入操作。 可以对 MERGE 表进行 drop 操作，这个操作只是删除 MERGE 表的定义，对内部的表没有任何影响。</span><br><span class="line"></span><br><span class="line">MERGE 在磁盘上保留 2 个以 MERGE 表名开头文件：.frm 文件存储表的定义；.MRG 文件包含组合表的信息，包括 MERGE 表由哪些表组成，插入数据时的依据。可以通过修改。MRG 文件来修改 MERGE 表，但是修改后要通过 flush table 刷新。 merge 表与分区表的区别是：merge 表不会智能的将记录写到对应的表中，而分区表可以的。</span><br></pre></td></tr></table></figure>
+<h3 id="MySQL-字符集-utf8-和-utfmb4-的区别"><a href="#MySQL-字符集-utf8-和-utfmb4-的区别" class="headerlink" title="MySQL 字符集 utf8 和 utfmb4 的区别"></a>MySQL 字符集 utf8 和 utfmb4 的区别</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">那上面说了既然 utf8 能够存下大部分中文汉字，那为什么还要使用 utf8mb4 呢？ &#x3D;&#x3D; 原来 MySQL 支持的 utf8 编码最大字符长度为 3 字节，如果遇到 4 字节的宽字符就会插入异常了。三个字节的 UTF-8 最大能编码的 Unicode 字符是 0xffff，也就是 Unicode 中的基本多文种平面（BMP）。也就是说，任何不在基本多文本平面的 Unicode 字符，都无法使用 MySQL 的 utf8 字符集存储 &#x3D;&#x3D;。包括 Emoji 表情（Emoji 是一种特殊的 Unicode 编码，常见于 iOS 和 Android 手机上），和很多不常用的汉字，以及任何新增的 Unicode 字符等等。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="主从复制的作用（好处，或者说为什么要做主从）重点！"><a href="#主从复制的作用（好处，或者说为什么要做主从）重点！" class="headerlink" title="主从复制的作用（好处，或者说为什么要做主从）重点！"></a>主从复制的作用（好处，或者说为什么要做主从）重点！</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、做数据的热备，作为后备数据库，主数据库服务器故障后，可切换到从数据库继续工作，避免数据丢失。</span><br><span class="line"></span><br><span class="line">2、架构的扩展。业务量越来越大，I&#x2F;O 访问频率过高，单机无法满足，此时做多库的存储，降低磁盘 I&#x2F;O 访问的频率，提高单个机器的 I&#x2F;O 性能。</span><br><span class="line"></span><br><span class="line">3、读写分离，使数据库能支撑更大的并发。在报表中尤其重要。由于部分报表 SQL 语句非常的慢，导致锁表，影响前台服务。如果前台使用 master，报表使用 slave，那么报表 SQL 将不会造成前台锁，保证了前台速度。</span><br></pre></td></tr></table></figure>
+<h3 id="主从复制的原理"><a href="#主从复制的原理" class="headerlink" title="主从复制的原理"></a>主从复制的原理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1.数据库有个 bin-log 二进制文件，记录了所有 SQL 语句。</span><br><span class="line"></span><br><span class="line">2.我们的目标就是把主数据库的 bin-log 文件的 SQL 语句复制过来。</span><br><span class="line"></span><br><span class="line">3.让其在从数据的 relay-log 重做日志文件中再执行一次这些 SQL 语句即可。</span><br><span class="line"></span><br><span class="line">4.下面的主从配置就是围绕这个原理配置</span><br><span class="line"></span><br><span class="line">5.具体需要三个线程来操作：</span><br><span class="line"></span><br><span class="line">1.binlog 输出线程：每当有从库连接到主库的时候，主库都会创建一个线程然后发送 binlog 内容到从库。在从库里，当复制开始的时候，从库就会创建两个线程进行处理：</span><br><span class="line"></span><br><span class="line">2.从库 I&#x2F;O 线程：当 START SLAVE 语句在从库开始执行之后，从库创建一个 I&#x2F;O 线程，该线程连接到主库并请求主库发送 binlog 里面的更新记录到从库上。从库 I&#x2F;O 线程读取主库的 binlog 输出线程发送的更新并拷贝这些更新到本地文件，其中包括 relay log 文件。</span><br><span class="line"></span><br><span class="line">3.从库的 SQL 线程：从库创建一个 SQL 线程，这个线程读取从库 I&#x2F;O 线程写到 relay log 的更新事件并执行。</span><br><span class="line"></span><br><span class="line">可以知道，对于每一个主从复制的连接，都有三个线程。拥有多个从库的主库为每一个连接到主库的从库创建一个 binlog 输出线程，每一个从库都有它自己的 I&#x2F;O 线程和 SQL 线程。</span><br><span class="line"></span><br><span class="line">步骤一：主库 db 的更新事件(update、insert、delete)被写到 binlog</span><br><span class="line"></span><br><span class="line">步骤二：从库发起连接，连接到主库</span><br><span class="line"></span><br><span class="line">步骤三：此时主库创建一个 binlog dump thread 线程，把 binlog 的内容发送到从库</span><br><span class="line"></span><br><span class="line">步骤四：从库启动之后，创建一个 I&#x2F;O 线程，读取主库传过来的 binlog 内容并写入到 relay log.</span><br><span class="line"></span><br><span class="line">步骤五：还会创建一个 SQL 线程，从 relay log 里面读取内容，从 Exec*Master*Log_Pos 位置开始执行读取到的更新事件，将更新内容写入到 slave 的 db.</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/php_mianshi02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-php_mianshi01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1175,172 +1373,9 @@
 
 
   
-    <article id="post-yaf02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/yaf02/">Yaf教程1：安装</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/yaf02/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:11:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Yaf 要求 PHP 必须为 5.2 及以上版本，如果是 PHP7，请使用 Yaf 3。本教程使用 64 位的 PHP 5.6，所以使用最后稳定版本 *<em>Yaf 2.3.5 *</em>为例。</p>
-<h2 id="1-Linux-服务器"><a href="#1-Linux-服务器" class="headerlink" title="1 Linux 服务器"></a>1 Linux 服务器</h2><p>确保服务器上安装了 PHP，再到 PHP PECL 下载 Yaf 源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;laruence&#x2F;yaf&#x2F;archive&#x2F;yaf-3.0.8.tar.gz</span><br><span class="line">cd yaf-3.0.8</span><br><span class="line">phpize</span><br><span class="line">.&#x2F;configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">sudo vim &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;7.2&#x2F;php.ini</span><br><span class="line">#加入配置</span><br><span class="line">extension&#x3D;php_yaf.dll</span><br><span class="line">#使用phpinfo()查看扩展或者使用 php -m 查看</span><br></pre></td></tr></table></figure>
-<h2 id="2-下载yaf框架"><a href="#2-下载yaf框架" class="headerlink" title="2 下载yaf框架"></a>2 下载yaf框架</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;laruence&#x2F;yaf.git</span><br><span class="line">cd yaf&#x2F;tools&#x2F;cg</span><br><span class="line">php yaf_cg yaf #生成框架</span><br><span class="line">cd output #这个目录下的项目就是yaf框架了</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/yaf02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-yaf01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/yaf01/">Yaf教程0：简介</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/yaf01/" class="archive-article-date">
-  	<time datetime="2020-04-20T11:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Yaf</strong>，全称 Yet Another Framework，是一个高性能的 PHP 开发框架。Yaf 用 C 语言编写，以 PHP 扩展形式作为 PHP 开发框架。相比于一般的 PHP 框架，如 Zend Framework、Yii、Ci，它更快更轻便。它提供了<strong>启动配置、路由、分发、视图、插件</strong>等功能， 是一个全功能的 PHP 框架。</p>
-<p><strong>Yaf 特点：</strong></p>
-<ol>
-<li>用 <strong>C 语言开发</strong>的 PHP 框架， 相比原生的 PHP, 几乎不会带来额外的性能开销。</li>
-<li>所有的框架类， <strong>不需要编译</strong>, 在 PHP 启动的时候加载， 并<strong>常驻内存</strong>.</li>
-<li>更短的内存周转周期， <strong>提高内存利用率</strong>, 降低内存占用率。</li>
-<li>灵巧的<strong>自动加载</strong>. 支持全局和局部两种加载规则， 方便类库共享。</li>
-<li>高性能的<strong>视图引擎</strong>.</li>
-<li>高度灵活<strong>可扩展的框架</strong>, 支持自定义视图引擎， 支持插件， 支持自定义路由等等。</li>
-<li>内建<strong>多种路由</strong>, 可以兼容目前常见的各种路由协议。</li>
-<li>强大而又高度灵活的<strong>配置文件支持</strong>. 并支持<strong>缓存配置文件</strong>, 避免复杂的配置结构带来的性能损失。</li>
-<li>在框架本身，对<strong>危险的操作习惯做了禁止</strong>.</li>
-<li>更快的<strong>执行速度，</strong> 更少的<strong>内存占用</strong>.</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/yaf01/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
     </nav>
   
 

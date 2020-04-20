@@ -183,6 +183,169 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-yaf02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/yaf02/">Yaf教程1：安装</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/yaf02/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:11:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Yaf 要求 PHP 必须为 5.2 及以上版本，如果是 PHP7，请使用 Yaf 3。本教程使用 64 位的 PHP 5.6，所以使用最后稳定版本 *<em>Yaf 2.3.5 *</em>为例。</p>
+<h2 id="1-Linux-服务器"><a href="#1-Linux-服务器" class="headerlink" title="1 Linux 服务器"></a>1 Linux 服务器</h2><p>确保服务器上安装了 PHP，再到 PHP PECL 下载 Yaf 源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;laruence&#x2F;yaf&#x2F;archive&#x2F;yaf-3.0.8.tar.gz</span><br><span class="line">cd yaf-3.0.8</span><br><span class="line">phpize</span><br><span class="line">.&#x2F;configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">sudo vim &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;7.2&#x2F;php.ini</span><br><span class="line">#加入配置</span><br><span class="line">extension&#x3D;php_yaf.dll</span><br><span class="line">#使用phpinfo()查看扩展或者使用 php -m 查看</span><br></pre></td></tr></table></figure>
+<h2 id="2-下载yaf框架"><a href="#2-下载yaf框架" class="headerlink" title="2 下载yaf框架"></a>2 下载yaf框架</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;laruence&#x2F;yaf.git</span><br><span class="line">cd yaf&#x2F;tools&#x2F;cg</span><br><span class="line">php yaf_cg yaf #生成框架</span><br><span class="line">cd output #这个目录下的项目就是yaf框架了</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/yaf02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-yaf01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/yaf01/">Yaf教程0：简介</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/yaf01/" class="archive-article-date">
+  	<time datetime="2020-04-20T11:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Yaf</strong>，全称 Yet Another Framework，是一个高性能的 PHP 开发框架。Yaf 用 C 语言编写，以 PHP 扩展形式作为 PHP 开发框架。相比于一般的 PHP 框架，如 Zend Framework、Yii、Ci，它更快更轻便。它提供了<strong>启动配置、路由、分发、视图、插件</strong>等功能， 是一个全功能的 PHP 框架。</p>
+<p><strong>Yaf 特点：</strong></p>
+<ol>
+<li>用 <strong>C 语言开发</strong>的 PHP 框架， 相比原生的 PHP, 几乎不会带来额外的性能开销。</li>
+<li>所有的框架类， <strong>不需要编译</strong>, 在 PHP 启动的时候加载， 并<strong>常驻内存</strong>.</li>
+<li>更短的内存周转周期， <strong>提高内存利用率</strong>, 降低内存占用率。</li>
+<li>灵巧的<strong>自动加载</strong>. 支持全局和局部两种加载规则， 方便类库共享。</li>
+<li>高性能的<strong>视图引擎</strong>.</li>
+<li>高度灵活<strong>可扩展的框架</strong>, 支持自定义视图引擎， 支持插件， 支持自定义路由等等。</li>
+<li>内建<strong>多种路由</strong>, 可以兼容目前常见的各种路由协议。</li>
+<li>强大而又高度灵活的<strong>配置文件支持</strong>. 并支持<strong>缓存配置文件</strong>, 避免复杂的配置结构带来的性能损失。</li>
+<li>在框架本身，对<strong>危险的操作习惯做了禁止</strong>.</li>
+<li>更快的<strong>执行速度，</strong> 更少的<strong>内存占用</strong>.</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/yaf01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mysqldump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -944,285 +1107,9 @@
 
 
   
-    <article id="post-session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/session/">session和cookie的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/session/" class="archive-article-date">
-  	<time datetime="2020-04-20T10:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>——————————————<strong>session 的使用</strong>————————————–</p>
-<p>session 中同一浏览器同一站点只能有一个 session_id,下面我们一起来看看关于 session 使用方法。<br>如何使用 session，凡是与 session 有关的，之前必须调用函数 session_start();<br>为 session 赋值很简单，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">Session_start();</span><br><span class="line">$Name &#x3D; &quot;这是一个Session例子&quot;;</span><br><span class="line">Session_Register(&quot;Name&quot;);&#x2F;&#x2F;注意,不要写成：Session_Register(&quot;$Name&quot;);</span><br><span class="line">echo $_SESSION[&quot;Name&quot;];</span><br><span class="line">&#x2F;&#x2F;输出$_SESSION[&quot;Name&quot;]为&quot;这是一个Session例子&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>取消 session 可以这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">session_unset();</span><br><span class="line">session_destroy();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>读取 session</p>
-<p>PHP 内置的 $_SESSION 变量可以很方便的访问设置的 session 变量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">echo &quot;登记的用户名为：&quot;.$_SESSION[&quot;username&quot;];    &#x2F;&#x2F;输出 登记的用户名为：nostop</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>检查变量是否被登记为会话变量 session_is_registered<br>语法：boobean session_is_registered(string name);<br>这个函数可检查当前的 session 之中是否已有指定的变量注册，参数 name 就是要检查的变量名。成功则返回逻辑值 true。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    session_start();</span><br><span class="line">    if(!session_is_registered(&quot;gender&quot;))&#123; &#x2F;&#x2F;判断当前会话变量是否注册</span><br><span class="line">        session_register(&quot;gender&quot;);    &#x2F;&#x2F;注册变量</span><br><span class="line">    &#125;</span><br><span class="line">    $gender&#x3D;&quot;女&quot;;</span><br></pre></td></tr></table></figure>
-<p>?&gt;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话名称  session_name</span><br><span class="line">语法：boolean session_name(string [name]);</span><br><span class="line">这个函数可取得或重新设置当前 session 的名称。若无参数 name 则表示获取当前 session 名称，加上参数则表示将 session 名称设为参数 name。</span><br></pre></td></tr></table></figure>
-<?php
-$sessionName = session_name();   //取得当前 Session 名，默认为 PHPSESSID
-$sessionID = $_GET[$sessionName];   //取得 Session ID
-session_id($sessionID);      //使用 session_id() 设置获得的 Session ID
-?>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">存取当前会话标识号 session_id</span><br><span class="line">语法：boolean session_id(string [id]);</span><br><span class="line">这个函数可取得或重新设置当前存放 session 的标识号。若无参数 id 则表示只获取当前 session 的标识号，加上参数则表示将 session 的标识号设成新指定的 id。</span><br><span class="line">设置 Session 的生存期</span><br></pre></td></tr></table></figure>
-<?php
-    session_start
-    // 保存一天
-    $lifeTime = 24 * 3600;
-    setcookie(session_name(), session_id(), time() + $lifeTime, "/");
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">session_set_cookie_params:设置 Session 的生存期的，该函数必须在 session_start() 函数调用之前调用。</span><br><span class="line">如果客户端使用 IE 6.0 ， session_set_cookie_params(); 函数设置 Cookie 会有些问题，所以我们还是手动调用 setcookie 函数来创建 cookie。</span><br></pre></td></tr></table></figure>
-<?php
-// 保存一天
-　　$lifeTime = 24 * 3600;
-　　session_set_cookie_params($lifeTime);
-　　session_start();
-　　$_session["admin"] = true;
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">设置 Session 文件的保存路径</span><br><span class="line">session_save_path() ：必须在 session_start() 函数调用之前调用</span><br></pre></td></tr></table></figure>
-<?php
-　　// 设置一个存放目录
-　　$savePath = "./session_save_dir/";
-　　// 保存一天
-　　$lifeTime = 24 * 3600;
-　　session_save_path($savePath);
-　　session_set_cookie_params($lifeTime);
-　　session_start();
-　　$_session["admin"] = true;
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<?php
-session_start();    //启动Session
-$username='nostop';
-session_register('username');    //注册一个名为username变量
-echo '登记的用户：'.$_SESSION['username'];    //登记的用户：nostop   读取Session变量
-
-$_SESSION['age']=23;    //声明一个名为age的变量，并赋值
-echo '年龄：'.$_SESSION['age']; //年龄：23
-
-session_unregister('username'); //注销Session变量
-echo $_SESSION['username'];  //空
-echo $_SESSION['age'];//23
-
-unset($_SESSION['age']); //注销Session变量
-echo '登记的用户：'.$_SESSION['username']; //空
-echo '年龄：'.$_SESSION['age']; //空
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意：1:在调用 Session_Start()之前不能有任何输出。例如下面是错误的。</span><br></pre></td></tr></table></figure>
-<?PHP
- Session_Start();//之前在第一行已经有输出
- .....
-?>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">提示 1:</span><br><span class="line"></span><br><span class="line">凡是出现&quot;........headers already sent..........&quot;,就是 Session_Start()之前向浏览器输出信息。</span><br><span class="line">去掉输出就正常，（COOKIE 也会出现这种错误，错误原因一样）</span><br><span class="line"></span><br><span class="line">提示 2:</span><br><span class="line"></span><br><span class="line">如果你的 Session_Start()放在循环语句里，并且很难确定之前哪里向浏览器输出信息，可以用下面这种方法：</span><br><span class="line">1 行 &lt;?PHP Ob_Start(); ?&gt;</span><br><span class="line">........这里是你的程序......</span><br><span class="line"></span><br><span class="line">2:这是什么错误</span><br><span class="line"></span><br><span class="line">Warning: session_start(): open(&#x2F;tmpsess_7d190aa36b4c5ec13a5c1649cc2da23f, O_RDWR) failed:....</span><br><span class="line">因为你没有指定 session 文件的存放路径。</span><br><span class="line"></span><br><span class="line">解决方法：</span><br><span class="line"></span><br><span class="line">(1)在 c 盘建立文件夹 tmp</span><br><span class="line">(2)打开 php.ini,找到 session.save_path,修改为 session.save_path&#x3D; &quot;c:&#x2F;tmp&quot;</span><br><span class="line"></span><br><span class="line">------------------------------------------**PHP cookie 的使用以及坑**--------------------------------------</span><br><span class="line"></span><br><span class="line">1.设置 cookie</span><br></pre></td></tr></table></figure>
-<p>setcookie(‘uid’, 3, time()+3600, ‘/‘, $_SERVER[‘HTTP_HOST’]);  // cookie 名字 cookie 值  过期时间  path 保存目录 作用域</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.设置 cookie 的过期</span><br></pre></td></tr></table></figure>
-<p>setcookie(‘uid’, 0, 0, ‘/‘, $_SERVER[‘HTTP_HOST’]);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.cookie 的坑 url 区分大小写</span><br><span class="line"></span><br><span class="line">如果不加第四个参数  可能会在 url 大小写下出现获取不到 cookie 所以一定要加上域名的作用域</span><br><span class="line"></span><br><span class="line">4.语法</span><br></pre></td></tr></table></figure>
-<ol>
-<li>setcookie(name,value,expire,path,domain,secure)<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>name</td>
-<td>必需。规定 cookie 的名称。</td>
-</tr>
-<tr>
-<td>value</td>
-<td>必需。规定 cookie 的值。</td>
-</tr>
-<tr>
-<td>expire</td>
-<td>可选。规定 cookie 的有效期。</td>
-</tr>
-<tr>
-<td>path</td>
-<td>可选。规定 cookie 的服务器路径。</td>
-</tr>
-<tr>
-<td>domain</td>
-<td>可选。规定 cookie 的域名。</td>
-</tr>
-<tr>
-<td>secure</td>
-<td>可选。规定是否通过安全的 HTTPS 连接来传输 cookie。</td>
-</tr>
-<tr>
-<td>```</td>
-<td></td>
-</tr>
-</tbody></table>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/php//" class="article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/session/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/hexo/">hexo 使用教程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/hexo/" class="archive-article-date">
-  	<time datetime="2020-04-20T07:16:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h3><p>获得个人网站域名<br>GitHub创建个人仓库<br>安装Git<br>安装Node.js<br>安装Hexo<br>推送网站<br>绑定域名<br>更换主题<br>初识MarkDown语法<br>发布文章<br>寻找图床<br>个性化设置<br>其他<br>附录</p>
-<h2 id="1-首先安装-node和npm-git-这些软件-以及注册github"><a href="#1-首先安装-node和npm-git-这些软件-以及注册github" class="headerlink" title="1.首先安装 node和npm git 这些软件 以及注册github"></a>1.首先安装 node和npm git 这些软件 以及注册github</h2><h2 id="2-安装hexo"><a href="#2-安装hexo" class="headerlink" title="2.安装hexo"></a>2.安装hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-cli -g  安装Hexo</span><br><span class="line">hexo init blog   建立一个项目</span><br></pre></td></tr></table></figure>
-<h2 id="3-连接Github与本地"><a href="#3-连接Github与本地" class="headerlink" title="3.连接Github与本地"></a>3.连接Github与本地</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;godweiyang&quot;</span><br><span class="line">git config --global user.email &quot;792321264@qq.com&quot;</span><br><span class="line">用户名和邮箱根据你注册github的信息自行修改。</span><br><span class="line">然后生成密钥SSH key：</span><br><span class="line">ssh-keygen -t rsa -C &quot;792321264@qq.com&quot;</span><br><span class="line">打开github，在头像下面点击settings，再点击SSH and GPG keys，新建一个SSH，名字随便。</span><br><span class="line">cat ~&#x2F;.ssh&#x2F;id_rsa.pub</span><br><span class="line">将输出的内容复制到框中，点击确定保存。</span><br><span class="line">在终端输入ssh -T git@github.com，如果如下图所示，出现你的用户名，那就成功了</span><br><span class="line">打开博客根目录下的_config.yml文件，这是博客的配置文件，在这里你可以修改与博客相关的各种信息。</span><br><span class="line"></span><br><span class="line">修改最后一行的配置：</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https:&#x2F;&#x2F;github.com&#x2F;godweiyang&#x2F;godweiyang.github.io</span><br><span class="line">  branch: master</span><br><span class="line">repository修改为你自己的github项目地址。</span><br></pre></td></tr></table></figure>
-<h2 id="4-hexo命令"><a href="#4-hexo命令" class="headerlink" title="4.hexo命令"></a>4.hexo命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;article title&quot;，新建一篇文章。</span><br><span class="line">hexo generate 生成静态文件</span><br><span class="line">hexo server  运行hexo服务器</span><br><span class="line">hexo deploy  将Hexo上传到Github</span><br></pre></td></tr></table></figure>
-<h2 id="5-建立标签分类"><a href="#5-建立标签分类" class="headerlink" title="5.建立标签分类"></a>5.建立标签分类</h2><p>生成”分类”<br>hexo new page categories，来新建一个页面，并命名为categories。成功后会提示：INFO Created: ~/hexo/source/categories/index.md<br>根据上面的路径找到index.md这个文件，打开后默认内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br></pre></td></tr></table></figure>
-<p>编辑新创建的页面，添加type: “categories”到内容中(注意，这些属性和属性值之间必须有一个空格)，主题将自动为这个页面显示所有分类，添加后是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2018-10-25 20:11:37</span><br><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure>
-<p>保存并关闭文件。</p>
-<p>给文章添加”categories”属性<br>打开需要添加分类的文章，为其添加categories属性。下方的categories: Python表示添加这篇文章到“Python”这个分类中。</p>
-<p>注意：Hexo中一篇文章只能属于一个分类，也就是说如果在”Python”下方添加”-xxx”，Hexo不会产生两个分类，而是把分类嵌套，即该文章属于”Python“下的”-xxx“分类。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: Python中*args和**kwargs的用法总结</span><br><span class="line">categories: Python</span><br></pre></td></tr></table></figure>
-<p>回到hexo文件夹下，依次执行hexo g，hexo server和hexo deploy命令(重新部署)。</p>
-<p>在Hexo菜单上添加分类选项</p>
-<p>menu:<br>  Python: /Python<br>##6.遇到问题<br>hexo d命令报错 ERROR Deployer not found: git</p>
-<p>解决方案<br>这是因为没安装hexo-deployer-git插件，在站点目录下输入下面的插件安装就好了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/oneself//" class="article-tag-list-link color3">oneself</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/hexo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
     </nav>
   
 
